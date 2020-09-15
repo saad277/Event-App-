@@ -9,7 +9,7 @@ import { createSwitchNavigator, createAppContainer } from 'react-navigation'
 
 
 import UserStack from "./UserTabNavigator";
-import PlannerStack from './PlannerTabNavigator'
+import PlannerStack from './PlannerDrawerNavigator'
 
 
 
