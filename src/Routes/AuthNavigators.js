@@ -8,14 +8,26 @@ import SignUp from '../Screens/Auth/SignUp/SignUp'
 
 
 
-const AuthStack=createStackNavigator({
+const AuthStack = createStackNavigator({
 
 
-    Login:{
-        screen:Login
+    Login: {
+        screen: Login,
+        navigationOptions: () => {
+
+            return {
+                headerShown: false
+            }
+        }
     },
-    SignUp:{
-        screen:SignUp
+    SignUp: {
+        screen: SignUp,
+        navigationOptions: () => {
+
+            return {
+                headerShown: false
+            }
+        }
     }
 
 
