@@ -4,8 +4,9 @@ import { createStackNavigator } from 'react-navigation-stack'
 
 
 import Login from '../Screens/Auth/Login/Login'
-import SignUp from '../Screens/Auth/SignUp/SignUp'
-
+import UserSignUp from '../Screens/Auth/SignUp/UserSignUp'
+import PlannerSignUp from "../Screens/Auth/SignUp/PlannerSignUp"
+import RegisterAs from '../Screens/Auth/Loading/RegisterAs'
 
 
 const AuthStack = createStackNavigator({
@@ -20,8 +21,29 @@ const AuthStack = createStackNavigator({
             }
         }
     },
-    SignUp: {
-        screen: SignUp,
+    
+    RegisterAs: {
+
+        screen: RegisterAs,
+        navigationOptions: () => {
+
+            return {
+               headerShown: false
+            }
+        }
+    },
+
+    UserSignUp: {
+        screen: UserSignUp,
+        navigationOptions: () => {
+
+            return {
+                headerShown: false
+            }
+        }
+    },
+    PlannerSignUp: {
+        screen: PlannerSignUp,
         navigationOptions: () => {
 
             return {

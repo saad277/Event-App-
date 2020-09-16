@@ -14,7 +14,10 @@ const Login = ({ navigation }) => {
 
     return (
 
-        <ImageBackground style={styles.container} source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}>
+        <ImageBackground 
+      
+        style={styles.container} 
+        source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}>
             <StatusBar color="black" />
             <View style={styles.header}>
                 <Text style={styles.textHeader}>Welcome !</Text>
@@ -54,7 +57,7 @@ const Login = ({ navigation }) => {
                     </LinearGradient>
 
                     <TouchableOpacity
-                        onPress={() => { }}
+                        onPress={() => navigation.navigate("RegisterAs")}
                         style={[styles.signIn, { borderColor: "#009387", borderWidth: 1, marginTop: 15 }]}
                     >
                         <Text style={[styles.textSign, { color: "#009387" }]}>Sign Up</Text>
