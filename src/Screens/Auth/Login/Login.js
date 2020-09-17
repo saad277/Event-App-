@@ -32,7 +32,7 @@ const Login = ({ navigation }) => {
                         size={20}
                     />
                     <TextInput placeholder="Enter Email" style={styles.textInput} autoCapitalize="none" />
-                    {/* <Feather  name="check-circle" color="green" size={2}  /> */}
+                   
                 </View>
 
                 <Text style={[styles.textFooter, { marginTop: 35 }]}>Password</Text>
@@ -44,7 +44,7 @@ const Login = ({ navigation }) => {
                         size={20}
                     />
                     <TextInput placeholder="Enter Password" style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
-                    {/* <Material  name="visibility" color="grey" size={2}  /> */}
+                  
                 </View>
 
                 <View style={styles.button}>

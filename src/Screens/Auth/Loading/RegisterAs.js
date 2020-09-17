@@ -11,9 +11,9 @@ const RegisterAs = ({ navigation }) => {
 
     return (
 
-        <ImageBackground style={styles.container} 
-        imageStyle={{ opacity: 0.4 }} 
-        source={{ uri: "https://images.unsplash.com/photo-1542326237-94b1c5a538d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=282&q=80ttps://images.unsplash.com/photo-1437419764061-2473afe69fc2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=890&q=80" }}>
+        <ImageBackground style={styles.container}
+            imageStyle={{ opacity: 0.4 }}
+            source={{ uri: "https://images.unsplash.com/photo-1542326237-94b1c5a538d4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=282&q=80ttps://images.unsplash.com/photo-1437419764061-2473afe69fc2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=890&q=80" }}>
 
             <Text style={styles.headerText}>Choose Your Title</Text>
             <View style={styles.imageContainer}>
@@ -37,7 +37,12 @@ const RegisterAs = ({ navigation }) => {
 
             </View>
 
-            <Button success style={{ marginBottom: "20%", alignSelf: "center" }} ><Text > Login ? </Text></Button>
+            <Button success
+                style={{ marginBottom: "20%", alignSelf: "center" }} 
+                onPress={()=>navigation.navigate("Login")}
+                >
+                <Text > Login ? </Text>
+            </Button>
 
         </ImageBackground>
 
