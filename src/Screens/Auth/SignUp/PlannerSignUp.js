@@ -9,7 +9,7 @@ import * as Animateable from 'react-native-animatable'
 
 
 
-const PlannerSignUp = () => {
+const PlannerSignUp = ({ navigation }) => {
 
 
     return (
@@ -72,7 +72,7 @@ const PlannerSignUp = () => {
 
                 </View>
 
-                <View style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("PlannerStack")}>
                     <LinearGradient
                         colors={["#08d4c4", "#01ab9d"]}
                         style={styles.signIn}
@@ -83,7 +83,7 @@ const PlannerSignUp = () => {
 
 
 
-                </View>
+                </TouchableOpacity>
 
             </Animateable.View>
 

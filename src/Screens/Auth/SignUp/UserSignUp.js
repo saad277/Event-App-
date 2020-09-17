@@ -6,7 +6,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import * as Animateable from 'react-native-animatable'
 
-const UserSignUp = () => {
+const UserSignUp = ({ navigation }) => {
 
 
     return (
@@ -56,7 +56,7 @@ const UserSignUp = () => {
 
                 </View>
 
-                <View style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("UserStack")}>
                     <LinearGradient
                         colors={["#08d4c4", "#01ab9d"]}
                         style={styles.signIn}
@@ -67,7 +67,7 @@ const UserSignUp = () => {
 
 
 
-                </View>
+                </TouchableOpacity>
             </Animateable.View>
 
         </ImageBackground>

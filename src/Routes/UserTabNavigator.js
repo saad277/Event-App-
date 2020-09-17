@@ -21,7 +21,7 @@ const UserTabNavigator = createBottomTabNavigator({
 
                 tabBarIcon: ({ tintColor }) => {
 
-                    return <Icon name="home" size={26} color="black" />
+                    return <Icon name="home" size={26} color={tintColor} />
 
                 }
             }
@@ -36,7 +36,7 @@ const UserTabNavigator = createBottomTabNavigator({
 
                 tabBarIcon: ({ tintColor }) => {
 
-                    return <Icon name="map-marker" size={26} color="black" />
+                    return <Icon name="map-marker" size={26} color={tintColor} />
 
                 }
             }
@@ -51,7 +51,7 @@ const UserTabNavigator = createBottomTabNavigator({
 
                 tabBarIcon: ({ tintColor }) => {
 
-                    return <Icon name="calendar" size={26} color="black" />
+                    return <Icon name="calendar" size={26} color={tintColor} />
 
                 }
             }
@@ -59,19 +59,19 @@ const UserTabNavigator = createBottomTabNavigator({
         }
     }
 
-},{
+}, {
 
 
-    tabBarOptions:{
+    tabBarOptions: {
 
-        inactiveTintColor:"lightgray",
-        activeTintColor:"black",
-        labelStyle:{
-            fontWeight:"bold",
-            fontSize:12
+        inactiveTintColor: "lightgray",
+        activeTintColor: "#009387",
+        labelStyle: {
+            fontWeight: "bold",
+            fontSize: 12
         },
-        style:{
-            height:50,
+        style: {
+            height: 50,
         }
     }
 })

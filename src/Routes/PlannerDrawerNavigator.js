@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
-
+import { MyEventStack, IncomeStack, SettingsStack } from './StackNavigators'
 
 
 const customDrawerContentComponent = (props) => {
@@ -32,7 +32,7 @@ const customDrawerContentComponent = (props) => {
 
                     <DrawerItems {...props} />
 
-                    
+
 
                 </SafeAreaView>
             </ScrollView>
@@ -48,12 +48,14 @@ const PlannerTabNavigator = createDrawerNavigator({
 
 
     MyEvents: {
-        screen: MyEvents,
+        screen: MyEventStack,
         navigationOptions: () => {
 
             return {
                 drawerLabel: "My Events",
                 drawerIcon: ({ tintColor }) => {
+
+
 
                     return <Icon name="calendar" size={26} color="black" />
 
@@ -63,7 +65,7 @@ const PlannerTabNavigator = createDrawerNavigator({
         }
     },
     Income: {
-        screen: Income,
+        screen: IncomeStack,
         navigationOptions: () => {
 
             return {
@@ -80,7 +82,7 @@ const PlannerTabNavigator = createDrawerNavigator({
 
     Settings: {
 
-        screen: Settings,
+        screen: SettingsStack,
         navigationOptions: () => {
 
             return {
