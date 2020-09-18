@@ -32,7 +32,7 @@ const UserSignUp = ({ navigation }) => {
 
                 </View>
 
-                <Text style={[styles.textFooter, { marginTop: 35 }]}>Email</Text>
+                <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
 
                 <View style={styles.action}>
                     <FontAwesome
@@ -44,7 +44,7 @@ const UserSignUp = ({ navigation }) => {
 
                 </View>
 
-                <Text style={[styles.textFooter, { marginTop: 35 }]}>Password</Text>
+                <Text style={[styles.textFooter, { marginTop: 30 }]}>Password</Text>
 
                 <View style={styles.action}>
                     <FontAwesome
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     },
     formContainer: {
 
-        flex: 4,
+        flex: 3,
         backgroundColor: "white",
         width: "100%",
         backgroundColor: '#fff',
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 40
     },
     signIn: {
         width: '100%',

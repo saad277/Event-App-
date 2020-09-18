@@ -53,6 +53,7 @@ const PlannerTabNavigator = createDrawerNavigator({
 
             return {
                 drawerLabel: "My Events",
+                tintColor:"#009387",
                 drawerIcon: ({ tintColor }) => {
 
 
@@ -91,7 +92,8 @@ const PlannerTabNavigator = createDrawerNavigator({
 
                     return <Icon name="cog" size={26} color="black" />
 
-                }
+                },
+                
             }
 
         }
@@ -101,7 +103,8 @@ const PlannerTabNavigator = createDrawerNavigator({
 
 
 }, {
-    contentComponent: customDrawerContentComponent
+    contentComponent: customDrawerContentComponent,
+    
 })
 
 

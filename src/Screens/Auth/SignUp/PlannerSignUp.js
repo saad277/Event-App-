@@ -17,6 +17,8 @@ const PlannerSignUp = ({ navigation }) => {
         <ImageBackground
             source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}
             style={styles.container}>
+
+       
             <View style={styles.header}>
                 <Text style={styles.headerText}>Planner Sign Up</Text>
             </View>
@@ -36,7 +38,7 @@ const PlannerSignUp = ({ navigation }) => {
 
                 </View>
 
-                <Text style={[styles.textFooter, { marginTop: 35 }]}>Email</Text>
+                <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
 
                 <View style={styles.action}>
                     <FontAwesome
@@ -49,7 +51,7 @@ const PlannerSignUp = ({ navigation }) => {
                 </View>
 
 
-                <Text style={[styles.textFooter, { marginTop: 35 }]}>Organization </Text>
+                <Text style={[styles.textFooter, { marginTop: 30 }]}>Organization </Text>
 
                 <View style={styles.action}>
                     <FontAwesome
@@ -60,7 +62,7 @@ const PlannerSignUp = ({ navigation }) => {
                     <TextInput placeholder="Organization Name" style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
 
                 </View>
-                <Text style={[styles.textFooter, { marginTop: 35 }]}>Password</Text>
+                <Text style={[styles.textFooter, { marginTop: 30 }]}>Password</Text>
 
                 <View style={styles.action}>
                     <FontAwesome
@@ -86,7 +88,7 @@ const PlannerSignUp = ({ navigation }) => {
                 </TouchableOpacity>
 
             </Animateable.View>
-
+            
         </ImageBackground>
     )
 
@@ -146,7 +148,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        marginTop: 50
+        marginTop: 40
     },
     signIn: {
         width: '100%',
