@@ -26,13 +26,13 @@ import Loading from "../Screens/Auth/Loading/Loading";
 
 const MainNavigator = createSwitchNavigator({
 
-
-    Auth: {
-        screen: AuthStack
-    },
     Loading: {
         screen: Loading
     },
+    Auth: {
+        screen: AuthStack
+    },
+ 
     UserStack: {
         screen: UserStack
     },

@@ -11,7 +11,7 @@ import RegisterAs from '../Screens/Auth/Loading/RegisterAs'
 
 const AuthStack = createStackNavigator({
 
-
+    
     Login: {
         screen: Login,
         navigationOptions: () => {
@@ -21,14 +21,14 @@ const AuthStack = createStackNavigator({
             }
         }
     },
-    
+
     RegisterAs: {
 
         screen: RegisterAs,
         navigationOptions: () => {
 
             return {
-               headerShown: false
+                headerShown: false
             }
         }
     },
