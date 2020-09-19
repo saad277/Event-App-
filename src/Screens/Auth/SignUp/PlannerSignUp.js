@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, ScrollView } from 'react-native'
@@ -7,10 +7,18 @@ import LinearGradient from 'react-native-linear-gradient'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import * as Animateable from 'react-native-animatable'
 
+import { connect } from 'react-redux'
+
+import { plannerSignUp } from '../../../Redux/Actions/Auth/AuthActions'
 
 
-const PlannerSignUp = ({ navigation }) => {
+const PlannerSignUp = ({ navigation, plannerSignUp }) => {
 
+
+    const [name, setName] = useState("saad5")
+    const [email, setEmail] = useState("saad5@gmail.com")
+    const [organization, setOrg] = useState("home")
+    const [password, setPassword] = useState("123")
 
     return (
 
@@ -18,7 +26,7 @@ const PlannerSignUp = ({ navigation }) => {
             source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}
             style={styles.container}>
 
-       
+
             <View style={styles.header}>
                 <Text style={styles.headerText}>Planner Sign Up</Text>
             </View>
@@ -34,7 +42,7 @@ const PlannerSignUp = ({ navigation }) => {
                         color="#05375a"
                         size={20}
                     />
-                    <TextInput placeholder="Enter Email" style={styles.textInput} autoCapitalize="none" />
+                    <TextInput placeholder="Enter Email" value={name} onChangeText={(text) => setEmail(text)} style={styles.textInput} autoCapitalize="none" />
 
                 </View>
 
@@ -46,7 +54,7 @@ const PlannerSignUp = ({ navigation }) => {
                         color="#05375a"
                         size={20}
                     />
-                    <TextInput placeholder="Enter Email" style={styles.textInput} autoCapitalize="none" />
+                    <TextInput placeholder="Enter Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.textInput} autoCapitalize="none" />
 
                 </View>
 
@@ -59,7 +67,7 @@ const PlannerSignUp = ({ navigation }) => {
                         color="#05375a"
                         size={20}
                     />
-                    <TextInput placeholder="Organization Name" style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
+                    <TextInput placeholder="Organization Name" value={organization} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
 
                 </View>
                 <Text style={[styles.textFooter, { marginTop: 30 }]}>Password</Text>
@@ -70,11 +78,11 @@ const PlannerSignUp = ({ navigation }) => {
                         color="#05375a"
                         size={22}
                     />
-                    <TextInput placeholder="Enter Password" style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
+                    <TextInput placeholder="Enter Password" value={password} onChangeText={(text) => setPassword(text)} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
 
                 </View>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("PlannerStack")}>
+                <TouchableOpacity style={styles.button} onPress={() => plannerSignUp(name, email, password, organization)}>
                     <LinearGradient
                         colors={["#08d4c4", "#01ab9d"]}
                         style={styles.signIn}
@@ -88,7 +96,7 @@ const PlannerSignUp = ({ navigation }) => {
                 </TouchableOpacity>
 
             </Animateable.View>
-            
+
         </ImageBackground>
     )
 
@@ -167,5 +175,15 @@ const styles = StyleSheet.create({
 
 
 
+const dispatchState = (dispatch) => {
 
-export default PlannerSignUp;
+
+    return {
+
+        plannerSignUp: (name, email, password, organization) => dispatch(plannerSignUp(name, email, password, organization))
+    }
+
+}
+
+
+export default connect(null, dispatchState)(PlannerSignUp);

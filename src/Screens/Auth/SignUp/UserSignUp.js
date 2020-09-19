@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
@@ -6,7 +6,15 @@ import LinearGradient from 'react-native-linear-gradient'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import * as Animateable from 'react-native-animatable'
 
-const UserSignUp = ({ navigation }) => {
+import { connect } from 'react-redux'
+import { userSignUp } from '../../../Redux/Actions/Auth/AuthActions'
+
+const UserSignUp = ({ navigation, userSignUp }) => {
+
+
+    const [name, setName] = useState("saad3")
+    const [email, setEmail] = useState("saad3@gmail.com")
+    const [password, setPassword] = useState("123")
 
 
     return (
@@ -28,7 +36,7 @@ const UserSignUp = ({ navigation }) => {
                         color="#05375a"
                         size={20}
                     />
-                    <TextInput placeholder="Enter Email" style={styles.textInput} autoCapitalize="none" />
+                    <TextInput placeholder="Enter Name" value={name} onChangeText={(text) => setName(text)} style={styles.textInput} autoCapitalize="none" />
 
                 </View>
 
@@ -40,7 +48,7 @@ const UserSignUp = ({ navigation }) => {
                         color="#05375a"
                         size={20}
                     />
-                    <TextInput placeholder="Enter Email" style={styles.textInput} autoCapitalize="none" />
+                    <TextInput placeholder="Enter Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.textInput} autoCapitalize="none" />
 
                 </View>
 
@@ -52,11 +60,11 @@ const UserSignUp = ({ navigation }) => {
                         color="#05375a"
                         size={22}
                     />
-                    <TextInput placeholder="Enter Password" style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
+                    <TextInput placeholder="Enter Password" value={password} onChangeText={(text) => setPassword(text)} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
 
                 </View>
 
-                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("UserStack")}>
+                <TouchableOpacity style={styles.button} onPress={() => userSignUp(name, email, password)}>
                     <LinearGradient
                         colors={["#08d4c4", "#01ab9d"]}
                         style={styles.signIn}
@@ -145,4 +153,17 @@ const styles = StyleSheet.create({
 })
 
 
-export default UserSignUp;
+
+const dispatchToProps = (dispatch) => {
+
+
+    return {
+
+        userSignUp: (name, email, password) => dispatch(userSignUp(name, email, password))
+
+    }
+
+
+}
+
+export default connect(null, dispatchToProps)(UserSignUp);

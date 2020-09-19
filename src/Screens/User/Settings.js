@@ -4,15 +4,18 @@ import { View, Text, Button, StyleSheet } from 'react-native'
 
 import AsyncStorage from '@react-native-community/async-storage';
 
+import { connect } from 'react-redux'
+import { logOut } from '../../Redux/Actions/Auth/AuthActions'
 
-
-const Settings = ({ navigation }) => {
+const Settings = ({ navigation, logOut }) => {
 
 
     const logout = async () => {
 
 
         await AsyncStorage.clear()
+
+        logOut();
 
         navigation.navigate("Loading")
 
@@ -38,4 +41,14 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Settings;
+
+const dispatchToProps = (dispatch) => {
+
+    return {
+
+        logOut: () => dispatch(logOut())
+
+    }
+
+}
+export default connect(null, dispatchToProps)(Settings);
