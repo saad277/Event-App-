@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs'
 import Home from '../Screens/User/Home'
 import Nearby from '../Screens/User/Nearby'
 import Upcoming from '../Screens/User/Upcoming'
+import Settings from '../Screens/User/Settings'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -57,6 +58,23 @@ const UserTabNavigator = createBottomTabNavigator({
             }
 
         }
+    },
+    Settings: {
+
+        screen: Settings,
+        navigationOptions: () => {
+
+            return {
+
+                tabBarIcon: ({ tintColor }) => {
+
+                    return <Icon name="cog" size={26} color={tintColor} />
+
+                }
+            }
+
+        }
+
     }
 
 }, {

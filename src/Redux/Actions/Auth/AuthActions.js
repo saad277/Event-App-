@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 
-import { SIGN_IN,LOG_OUT } from './ActionTypes'
+import { LOG_OUT, SET_USER } from './ActionTypes'
 import asyncStorage from '@react-native-community/async-storage'
 
 
@@ -9,7 +9,7 @@ import asyncStorage from '@react-native-community/async-storage'
 
 
 
-export const signIn = (email, password) => {
+export const signIn = (email, password, navigation) => {
 
     console.log(email, password)
 
@@ -34,14 +34,49 @@ export const signIn = (email, password) => {
             .then((res) => res.json())
             .then(async (response) => {
 
-                await asyncStorage.setItem("token", response.token)
-            
+                console.log(response)
 
-                dispatch({
 
-                    type:SET_USER,
-                    payload:response.user
-                })
+                if (response.user) {
+
+                    await asyncStorage.setItem("userToken", response.token)
+
+                    await asyncStorage.setItem("user", JSON.stringify(response.user))
+
+                    dispatch({
+
+                        type: SET_USER,
+                        payload: response.user
+
+                    })
+
+                        navigation.navigate("Loading")
+                 
+
+                } else if (response.planner) {
+
+                    await asyncStorage.setItem("plannerToken", response.token)
+
+                    await asyncStorage.setItem("planner", JSON.stringify(response.planner))
+
+                    dispatch({
+
+                        type: SET_USER,
+                        payload: response.planner
+
+                    })
+
+
+                        navigation.navigate("Loading")
+
+                   
+
+                }
+
+
+
+
+
 
             })
 
@@ -55,17 +90,17 @@ export const signIn = (email, password) => {
 
 
 
-export const logOut=()=>{
+export const logOut = () => {
 
 
-    return (dispatch)=>{
+    return (dispatch) => {
 
-            console.log("12222222222222")
+        console.log("12222222222222")
 
         dispatch({
 
-                type:LOG_OUT,
-                payload:"saaaaa"
+            type: LOG_OUT,
+            payload: "saaaaa"
         })
 
     }

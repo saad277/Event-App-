@@ -14,16 +14,32 @@ const Loading = ({ navigation }) => {
 
         setTimeout(async () => {
 
-            const token = await AsyncStorage.getItem("token")
-            console.log(token)
-            
-            if(token){
+            const userToken = await AsyncStorage.getItem("userToken")
+            console.log(userToken)
 
+            if (userToken) {
 
-            }else {
+                return navigation.navigate("UserStack")
 
-                    navigation.navigate("Auth")
+            } else {
+
+                const plannerToken = await AsyncStorage.getItem("plannerToken")
+
+                console.log(plannerToken)
+
+                if (plannerToken) {
+
+                    return navigation.navigate("PlannerStack")
+
+                }
+
             }
+
+            return navigation.navigate("Auth")
+
+
+
+
 
         }, 2700)
 

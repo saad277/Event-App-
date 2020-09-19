@@ -9,10 +9,10 @@ import Material from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import { signIn, logOut } from '../../../Redux/Actions/Auth/AuthActions'
 
-const Login = ({ navigation, signIn, logOut }) => {
+const Login = ({ navigation, signIn, }) => {
 
 
-    const [email, setEmail] = useState("saad2@gmail.com")
+    const [email, setEmail] = useState("saad@gmail.com")
     const [password, setPassword] = useState("123")
 
     return (
@@ -34,7 +34,7 @@ const Login = ({ navigation, signIn, logOut }) => {
                         color="#05375a"
                         size={20}
                     />
-                    <TextInput placeholder="Enter Email" value={email} style={styles.textInput} autoCapitalize="none" />
+                    <TextInput placeholder="Enter Email" onChangeText={(text) => setEmail(text)} value={email} style={styles.textInput} autoCapitalize="none" />
 
                 </View>
 
@@ -46,7 +46,7 @@ const Login = ({ navigation, signIn, logOut }) => {
                         color="#05375a"
                         size={20}
                     />
-                    <TextInput placeholder="Enter Password" value={password} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
+                    <TextInput placeholder="Enter Password" onChangeText={(text) => setPassword(text)} value={password} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
 
                 </View>
 
@@ -55,16 +55,16 @@ const Login = ({ navigation, signIn, logOut }) => {
                         colors={["#08d4c4", "#01ab9d"]}
                         style={styles.signIn}
                     >
-                        <Text style={[styles.textSign, { color: "#fff" }]} onPress={() => signIn(email, password)} >Sign In</Text>
+                        <Text style={[styles.textSign, { color: "#fff" }]} onPress={() => signIn(email, password, navigation)} >Sign In</Text>
 
                     </LinearGradient>
 
                     <TouchableOpacity
-                      
+
                         style={[styles.signIn, { borderColor: "#009387", borderWidth: 1, marginTop: 15 }]}
                     >
-                        <Text style={[styles.textSign, { color: "#009387" }]}   
-                        onPress={() => navigation.navigate("RegisterAs")}>Sign Up</Text>
+                        <Text style={[styles.textSign, { color: "#009387" }]}
+                            onPress={() => navigation.navigate("RegisterAs")}>Sign Up</Text>
                     </TouchableOpacity>
 
                 </View>
@@ -151,8 +151,8 @@ const dispatchStateToProps = (dispatch) => {
 
 
     return {
-        signIn: (email, password) => dispatch(signIn(email, password)),
-        
+        signIn: (email, password, navigation) => dispatch(signIn(email, password, navigation)),
+
     }
 
 
