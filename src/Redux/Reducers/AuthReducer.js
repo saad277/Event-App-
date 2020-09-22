@@ -6,7 +6,7 @@ import { SET_USER, LOG_OUT, SIGN_UP } from '../Actions/Auth/ActionTypes'
 
 
 const iState = {
-
+        
 
 }
 

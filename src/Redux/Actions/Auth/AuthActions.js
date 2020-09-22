@@ -1,10 +1,10 @@
 
-import axios from 'axios'
+
 
 import { LOG_OUT, SET_USER, PLANNER_SIGN_UP, USER_SIGN_UP } from './ActionTypes'
 import asyncStorage from '@react-native-community/async-storage'
 
-
+import { baseUrl } from '../../../BaseUrl/baseUrl'
 
 
 
@@ -17,7 +17,7 @@ export const signIn = (email, password, navigation) => {
 
 
 
-        fetch("http://10.0.2.2:4000/signIn", {
+        fetch(baseUrl + "signIn", {
 
             method: "POST",
             headers: {
@@ -116,7 +116,7 @@ export const userSignUp = (name, email, password) => {
     return (dispatch) => {
 
 
-        fetch("http://10.0.2.2:4000/user/signUp", {
+        fetch(baseUrl + "user/signUp", {
 
             method: "POST",
             headers: {
@@ -156,7 +156,7 @@ export const plannerSignUp = (name, email, password, organization) => {
     return (dispatch) => {
 
 
-        fetch("http://10.0.2.2:4000/planner/signUp", {
+        fetch(baseUrl + "planner/signUp", {
 
             method: "POST",
             headers: {

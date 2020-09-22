@@ -3,8 +3,10 @@ import React from 'react'
 
 
 
-import { createSwitchNavigator, createAppContainer } from 'react-navigation'
+import { createSwitchNavigator, createAppContainer, } from 'react-navigation'
 
+
+import { connect } from 'react-redux'
 
 
 
@@ -32,7 +34,7 @@ const MainNavigator = createSwitchNavigator({
     Auth: {
         screen: AuthStack
     },
- 
+
     UserStack: {
         screen: UserStack
     },
