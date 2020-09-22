@@ -4,7 +4,12 @@ import { View, Text, StyleSheet } from 'react-native'
 import LottieView from 'lottie-react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const Loading = ({ navigation }) => {
+
+import { connect } from 'react-redux'
+
+import { SET_USER } from '../../../Redux/Actions/Auth/ActionTypes'
+
+const Loading = ({ navigation, setUser }) => {
 
 
 
@@ -15,20 +20,28 @@ const Loading = ({ navigation }) => {
         setTimeout(async () => {
 
             const userToken = await AsyncStorage.getItem("userToken")
+            const user = await AsyncStorage.getItem("user")
+            const userData = JSON.parse(user)
+
             console.log(userToken)
 
             if (userToken) {
 
+
+                setUser(userData)
                 return navigation.navigate("UserStack")
 
             } else {
 
                 const plannerToken = await AsyncStorage.getItem("plannerToken")
+                const planner = await AsyncStorage.getItem("planner")
+                const plannerData = JSON.parse(planner)
 
                 console.log(plannerToken)
 
                 if (plannerToken) {
 
+                    setUser(plannerData)
                     return navigation.navigate("PlannerStack")
 
                 }
@@ -79,4 +92,16 @@ const styles = StyleSheet.create({
 
 })
 
-export default Loading;
+
+const dispatchState = (dispatch) => {
+
+
+    return {
+
+        setUser: (user) => dispatch({ type: SET_USER, payload: user })
+    }
+
+}
+
+
+export default connect(null, dispatchState)(Loading);

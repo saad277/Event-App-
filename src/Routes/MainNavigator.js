@@ -4,9 +4,11 @@ import React from 'react'
 
 
 import { createSwitchNavigator, createAppContainer, } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
 
 
-import { connect } from 'react-redux'
+
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -19,9 +21,29 @@ import AuthStack from './AuthNavigators'
 
 
 import Loading from "../Screens/Auth/Loading/Loading";
+import CreateEvent from '../Screens/Planner/CreateEvent'
 
 
+const Planner = createStackNavigator({
 
+    Planner: {
+
+        screen: PlannerStack,
+        navigationOptions: ({ navigation }) => {
+
+            return {
+
+                headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
+                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} onPress={()=>navigation.navigate("CreateEvent")} />,
+            }
+        }
+    },
+    CreateEvent: {
+        screen: CreateEvent
+    }
+
+
+})
 
 
 
@@ -39,8 +61,9 @@ const MainNavigator = createSwitchNavigator({
         screen: UserStack
     },
     PlannerStack: {
-        screen: PlannerStack
+        screen: Planner
     }
+
 
 
 

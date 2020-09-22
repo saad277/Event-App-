@@ -11,11 +11,10 @@ import { connect } from 'react-redux'
 
 
 
-import asyncStorage from '@react-native-community/async-storage'
 
 const CustomDrawerContentComponent = (props) => {
 
-    console.log("contttttttttt")
+
     console.log(props.auth)
 
 
@@ -33,8 +32,8 @@ const CustomDrawerContentComponent = (props) => {
                     <View style={styles.drawerHeader}>
                         <Image
                             style={styles.drawerImage}
-                            source={{ uri: "https://f1.pngfuel.com/png/74/8/847/circle-silhouette-user-logo-user-profile-avatar-head-line-art-oval-png-clip-art.png" }} />
-                        <Text style={styles.drawerHeaderText}>abc@gmail.com</Text>
+                            source={{ uri: props.auth.picture }} />
+                        <Text style={styles.drawerHeaderText}>{props.auth.name}</Text>
                     </View>
 
                     <DrawerItems {...props} />
@@ -72,8 +71,9 @@ const styles = StyleSheet.create({
     },
     drawerImage: {
         margin: 10,
-        width: 80,
-        height: 80,
+        width: 100,
+        height: 100,
+        borderRadius:50
     }
 })
 
@@ -81,7 +81,7 @@ const mapStateToProps = (state) => {
 
     return {
 
-        auth: state
+        auth: state.auth
     }
 
 }
