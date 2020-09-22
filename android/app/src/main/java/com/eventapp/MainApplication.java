@@ -14,6 +14,7 @@ import java.util.List;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.BV.LinearGradient.LinearGradientPackage; // <--- This!
 import com.airbnb.android.react.lottie.LottiePackage;
+import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
           new VectorIconsPackage();
           new LinearGradientPackage();
           packages.add(new LottiePackage());
+        
           return packages;
         }
 

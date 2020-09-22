@@ -13,7 +13,6 @@ import {
 
 import MainNavigator from './src/Routes/MainNavigator'
 
-
 import { connect } from 'react-redux'
 
 const App = (props) => {
@@ -28,14 +27,7 @@ const App = (props) => {
 
 
 
-const mapStateToProps = (state) => {
 
-  return {
-
-    auth: state
-  }
-
-}
 
 
 export default (App);
