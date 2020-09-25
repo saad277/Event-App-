@@ -1,5 +1,5 @@
 import { Form } from 'native-base'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import MapView, { PROVIDER_GOOGLE, PROVIDER_DEFAULT, Marker } from 'react-native-maps'
 
@@ -10,28 +10,30 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native'
 
 
 
-const Map = () => {
+const Map = ({ region, forwardedRef }) => {
+
+
 
 
     const [loading, setLoading] = useState(false)
 
-    const [region, setRegion] = useState({
-        latitude: 10,
-        longitude: 10,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001
-    })
+    //console.log(region)
 
     return (
         <View style={styles.container}>
             <MapView
                 style={styles.map}
-                provider={PROVIDER_GOOGLE}
+                provider={PROVIDER_DEFAULT}
                 initialRegion={region}
                 mapType="satellite"
+                ref={forwardedRef}
                 onMapReady={() => console.log("map loaded")}
             >
-
+                <Marker
+                    coordinate={{ latitude: region.latitude, longitude: region.longitude }}
+                // title={marker.title}
+                // description={marker.description}
+                />
 
 
             </MapView>

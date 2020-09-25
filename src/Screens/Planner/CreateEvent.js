@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 
 
 import { View, Text, ScrollView, StyleSheet, SafeAreaView, Image, } from 'react-native'
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
-import { Container, Header, Content, Item, Input, Button } from 'native-base';
+import { Item, Input, Button, Picker, Form, Textarea, } from 'native-base';
 
 import DateTimePicker from '@react-native-community/datetimepicker'
 
@@ -19,6 +19,7 @@ const CreateEvent = () => {
 
 
 
+    let mapRef = useRef(null)
 
 
 
@@ -28,6 +29,17 @@ const CreateEvent = () => {
     const [location, setLocation] = useState("")
 
     const [eventLocation, setEventLocation] = useState({})
+
+    const [type, setType] = useState("")
+    const [description, setDescription] = useState("")
+
+    const [region, setRegion] = useState({
+        latitude: 10,
+        longitude: 10,
+        latitudeDelta: 0.001,
+        longitudeDelta: 0.001
+    })
+
 
     //from states
     const [fromDate, setDateFrom] = useState(new Date());
@@ -62,12 +74,36 @@ const CreateEvent = () => {
         fetch(`http://api.positionstack.com/v1/forward?access_key=b060536a5abca8391d7dbb68ac74ace8&query=${location}`)
             .then((res) => res.json())
             .then(response => {
-                
+
                 console.log(response.data[0].country)
                 console.log(response.data[0].county)
                 console.log(response.data[0].label)
                 console.log(response.data[0].latitude)
                 console.log(response.data[0].longitude)
+
+                let details = {
+
+                    country: response.data[0].country,
+                    county: response.data[0].county,
+                    label: response.data[0].label,
+                    latitude: response.data[0].latitude,
+                    longitude: response.data[0].longitude
+
+                }
+
+                setEventLocation(details)
+
+                setRegion({
+                    latitude: response.data[0].latitude,
+                    longitude: response.data[0].longitude,
+                    latitudeDelta: 0.001,
+                    longitudeDelta: 0.001
+                })
+
+                mapRef.current.animateToCoordinate({
+                    latitude: response.data[0].latitude,
+                    longitude: response.data[0].longitude
+                })
             }
 
 
@@ -133,6 +169,22 @@ const CreateEvent = () => {
     }
 
     const phaseTwo = () => {
+
+
+    }
+
+
+    const phaseThree = () => {
+
+
+    }
+
+    const phaseFour = () => {
+
+
+    }
+
+    const submit = () => {
 
 
     }
@@ -243,11 +295,12 @@ const CreateEvent = () => {
 
                     </View>
                 </ProgressStep>
-                <ProgressStep label="Third Step" >
 
-                    <View style={{ flex: 1, height: 450 }}>
+                <ProgressStep label="Third Step" onNext={() => phaseThree()} >
 
-                        <Map />
+                    <View style={{ flex: 1, height: 350 }}>
+
+                        <Map region={region} forwardedRef={mapRef} />
 
 
 
@@ -274,13 +327,51 @@ const CreateEvent = () => {
                     </View>
 
 
+                </ProgressStep>
 
+
+                <ProgressStep label="Fourth Step" onNext={() => phaseFour()} onSubmit={() => submit()}>
+
+
+                    <View style={{ flex: 1 }}>
+
+                        <Text style={[styles.dateHeader, { alignSelf: "center" }]}>Almost There ! </Text>
+
+
+
+                        <Form style={{ width: "100%" }}>
+
+                            <Text style={[styles.side, { marginTop: 25 }]}>Event Description :</Text>
+                            <Textarea rowSpan={5} bordered placeholder="Enter Event Description" onChangeText={(text) => setDescription(text)} />
+
+
+                            <Text style={[styles.side, { marginTop: 25 }]}>Event Type :</Text>
+                            <Picker
+                                mode="dropdown"
+                                selectedValue={type}
+                                onValueChange={(text) => setType(text)}
+                            >
+                                <Picker.Item label="Education" value="Education" />
+                                <Picker.Item label="Festival" value="Festival" />
+                                <Picker.Item label="Work Shop" value="Work Shop" />
+                                <Picker.Item label="Party" value="Party" />
+                                <Picker.Item label="Concert" value="Concert" />
+                                <Picker.Item label="Tour" value="Tour" />
+                            </Picker>
+
+
+                        </Form>
+
+
+
+                    </View>
 
 
 
 
 
                 </ProgressStep>
+
             </ProgressSteps>
 
 

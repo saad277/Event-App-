@@ -39,7 +39,14 @@ const Planner = createStackNavigator({
         }
     },
     CreateEvent: {
-        screen: CreateEvent
+        screen: CreateEvent,
+        navigationOptions:({navigation})=>{
+
+            return {
+                    title:"Create Event"
+            }
+
+        }
     }
 
 
