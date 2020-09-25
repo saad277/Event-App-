@@ -9,22 +9,25 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import Modal from 'react-native-modal'
 
-import Lottie from 'lottie-react-native'
 
 import ImagePicker from 'react-native-image-crop-picker';
+
+import Map from './Map/Map'
 
 const CreateEvent = () => {
 
 
 
 
-    const [toggleModal, setModal] = useState(false)
+
 
 
     const [name, setName] = useState("")
     const [image, setImage] = useState("")
+    const [location, setLocation] = useState("")
+
+    const [eventLocation, setEventLocation] = useState({})
 
     //from states
     const [fromDate, setDateFrom] = useState(new Date());
@@ -54,6 +57,24 @@ const CreateEvent = () => {
 
     }
 
+    const findLocation = () => {
+
+        fetch(`http://api.positionstack.com/v1/forward?access_key=b060536a5abca8391d7dbb68ac74ace8&query=${location}`)
+            .then((res) => res.json())
+            .then(response => {
+                
+                console.log(response.data[0].country)
+                console.log(response.data[0].county)
+                console.log(response.data[0].label)
+                console.log(response.data[0].latitude)
+                console.log(response.data[0].longitude)
+            }
+
+
+            )
+
+
+    }
 
 
 
@@ -104,9 +125,14 @@ const CreateEvent = () => {
 
 
 
-    const check = () => {
+    const phaseOne = () => {
 
-        console.log(name, image)
+        console.log(name, toDate, fromDate)
+
+
+    }
+
+    const phaseTwo = () => {
 
 
     }
@@ -122,112 +148,141 @@ const CreateEvent = () => {
         <View style={{ flex: 1 }}>
 
 
-            <Lottie source={require("../../Assets/Lottie/party-people.json")} autoPlay={true} loop={true} />
-
-
-            <Button
-                iconLeft
-                rounded
-                success
-                style={{ width: 220, justifyContent: "center", alignSelf: "center", marginTop: 50 }}
-                onPress={() => setModal(!toggleModal)}
-            >
-                <Icon name='plus-circle' size={20} style={{ marginHorizontal: 10 }} />
-                <Text style={{ fontSize: 20 }}>Create An Event</Text>
-            </Button>
 
 
 
-            <Modal isVisible={toggleModal} coverScreen={true} style={styles.modal} animationIn={'slideInUp'} animationOut={'slideOutDown'}>
-                <ProgressSteps>
-                    <ProgressStep label="First Step" onNext={() => check()}>
+            <ProgressSteps>
+                <ProgressStep label="First Step" onNext={() => phaseOne()}>
 
-                        <View style={{ alignItems: 'center', flexDirection: "column", flex: 1, }}>
-                            <Item style={{ padding: 10, justifyContent: "center", marginTop: 25, }}>
-                                <Icon name='birthday-cake' size={30} color="#009387" />
-                                <Input placeholder='Enter Event Name' style={{ marginLeft: 20 }} value={name} onChangeText={(text) => setName(text)} />
-                            </Item>
+                    <View style={{ alignItems: 'center', flexDirection: "column", flex: 1, }}>
+                        <Item style={{ padding: 10, justifyContent: "center", marginTop: 25, }}>
+                            <Icon name='birthday-cake' size={30} color="#009387" />
+                            <Input placeholder='Enter Event Name' style={{ marginLeft: 20 }} value={name} onChangeText={(text) => setName(text)} />
+                        </Item>
 
-                            <Text style={styles.dateHeader}>Choose A Date </Text>
+                        <Text style={styles.dateHeader}>Choose A Date </Text>
 
-                            <Text style={styles.side}>From  </Text>
+                        <Text style={styles.side}>From  </Text>
 
-                            <Item style={{ padding: 10, marginTop: 25, justifyContent: "center", width: "100%" }} >
-                                <Icon name='calendar' size={30} color="#009387" style={{ marginRight: 20 }} />
+                        <Item style={{ padding: 10, marginTop: 25, width: "100%", flexDirection: "row" }} >
+                            <Icon name='calendar' size={30} color="#009387" style={{ marginRight: 20 }} />
 
-                                {fromShow && (<DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={fromDate}
-                                    mode={fromMode}
-                                    is24Hour={false}
+                            {fromShow && (<DateTimePicker
+                                testID="dateTimePicker"
+                                value={fromDate}
+                                mode={fromMode}
+                                is24Hour={false}
 
-                                    display="default"
-                                    onChange={onChangeFrom}
-                                />)}
-                                <Text onPress={() => showDatepickerFrom()} style={{ fontSize: 16 }} >{fromDate.toString().slice(0, 16)}</Text>
-                            </Item>
+                                display="default"
+                                onChange={onChangeFrom}
+                            />)}
+                            <Text onPress={() => showDatepickerFrom()} style={{ fontSize: 16 }} >{fromDate.toString().slice(0, 16)}</Text>
 
-                            <Text style={[styles.side, { marginTop: 20 }]}>To</Text>
+                            <Icon name='clock-o' size={30} color="#009387" style={{ marginLeft: 15, marginRight: 20 }} />
 
-
-
-                            <Item style={{ padding: 10, marginTop: 25, justifyContent: "center", width: "100%" }} >
-                                <Icon name='calendar' size={30} color="#009387" style={{ marginRight: 20 }} />
-
-                                {toShow && (<DateTimePicker
-                                    testID="dateTimePicker"
-                                    value={toDate}
-                                    mode={toMode}
-                                    is24Hour={false}
-
-                                    display="default"
-                                    onChange={onChangeTo}
-                                />)}
-                                <Text onPress={() => showDatepickerTo()} style={{ fontSize: 16 }} >{toDate.toString().slice(0, 16)}</Text>
-                            </Item>
+                            <Text onPress={() => showTimepickerFrom()} style={{ fontSize: 16, }} >{fromDate.toString().slice(16, 25)}</Text>
 
 
-                            <Button danger style={styles.btnContainer} onPress={() => cancel()}>
-                                <Text style={styles.btnText}>Cancel</Text>
-                            </Button>
+                        </Item>
+
+                        <Text style={[styles.side, { marginTop: 20 }]}>To</Text>
 
 
 
-                        </View>
-                    </ProgressStep>
+                        <Item style={{ padding: 10, marginTop: 25, width: "100%", flexDirection: "row" }} >
+                            <Icon name='calendar' size={30} color="#009387" style={{ marginRight: 20 }} />
+
+                            {toShow && (<DateTimePicker
+                                testID="dateTimePicker"
+                                value={toDate}
+                                mode={toMode}
+                                is24Hour={false}
+
+                                display="default"
+                                onChange={onChangeTo}
+                            />)}
+                            <Text onPress={() => showDatepickerTo()} style={{ fontSize: 16 }} >{toDate.toString().slice(0, 16)}</Text>
 
 
 
+                            <Icon name='clock-o' size={30} color="#009387" style={{ marginLeft: 15, marginRight: 20 }} />
 
-                    <ProgressStep label="Second Step" onNext={() => check()}>
-                        <View style={{ alignItems: 'center' }}>
-
-                            <Text style={styles.dateHeader}>Choose An Image For Event</Text>
-                            <Image style={styles.image}
-                                source={image ? { uri: 'data:image/jpeg;base64,' + image.data } : { uri: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&w=1000&q=80" }} />
-
-                            <Button style={{ width: 160, justifyContent: "center", alignSelf: "center", marginTop: 50 }}
-                                iconLeft transparent success
-                                onPress={() => chooseImage()}
-                            >
-                                <Icon name='camera' size={20} style={{ color: "white", marginHorizontal: 20, }} />
-                                <Text style={{ fontSize: 20, color: "white" }} >Choose </Text>
-                            </Button>
+                            <Text onPress={() => showTimepickerTo()} style={{ fontSize: 16, }} >{toDate.toString().slice(16, 25)}</Text>
 
 
-                        </View>
-                    </ProgressStep>
-                    <ProgressStep label="Third Step">
-                        <View style={{ alignItems: 'center' }}>
-                            <Text>This is the content within step 3!</Text>
+                        </Item>
+
+
+                        <Button danger style={styles.btnContainer} onPress={() => cancel()}>
+                            <Text style={styles.btnText}>Cancel</Text>
+                        </Button>
+
+
+
+                    </View>
+                </ProgressStep>
 
 
 
 
-                        </View>
-                    </ProgressStep>
-                </ProgressSteps>
-            </Modal>
+                <ProgressStep label="Second Step" onNext={() => phaseTwo()}>
+                    <View style={{ alignItems: 'center' }}>
+
+                        <Text style={styles.dateHeader}>Choose An Image For Event</Text>
+                        <Image style={styles.image}
+                            source={image ? { uri: 'data:image/jpeg;base64,' + image.data } : { uri: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&w=1000&q=80" }} />
+
+                        <Button style={{ width: 160, justifyContent: "center", alignSelf: "center", marginTop: 50 }}
+                            iconLeft transparent success
+                            onPress={() => chooseImage()}
+                        >
+                            <Icon name='camera' size={20} style={{ color: "white", marginHorizontal: 20, }} />
+                            <Text style={{ fontSize: 20, color: "white" }} >Choose </Text>
+                        </Button>
+
+
+                    </View>
+                </ProgressStep>
+                <ProgressStep label="Third Step" >
+
+                    <View style={{ flex: 1, height: 450 }}>
+
+                        <Map />
+
+
+
+
+
+                    </View>
+
+                    <View style={{ backgroundColor: "white", flexDirection: "row" }}>
+
+                        <Input placeholder='Enter Location' style={{ marginLeft: 20, width: 200, flex: 1, }} value={location} onChangeText={(text) => setLocation(text)} />
+
+                        <Button
+                            iconLeft
+                            transparent
+                            success
+                            style={{ flex: 0.7, justifyContent: "center" }}
+                            onPress={() => findLocation()}
+                        >
+
+                            <Icon name='search' size={20} style={{ marginRight: 10 }} />
+                            <Text style={{ fontSize: 24 }}>Search</Text>
+                        </Button>
+
+                    </View>
+
+
+
+
+
+
+
+
+                </ProgressStep>
+            </ProgressSteps>
+
 
 
 
