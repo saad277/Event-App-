@@ -28,10 +28,11 @@ const CreateEvent = () => {
     const [image, setImage] = useState("")
     const [location, setLocation] = useState("")
 
-    const [eventLocation, setEventLocation] = useState({})
+    const [eventLocation, setEventLocation] = useState(null)
 
     const [type, setType] = useState("")
     const [description, setDescription] = useState("")
+    const [capacity, setCapacity] = useState("")
 
     const [region, setRegion] = useState({
         latitude: 10,
@@ -161,31 +162,16 @@ const CreateEvent = () => {
 
 
 
-    const phaseOne = () => {
-
-        console.log(name, toDate, fromDate)
 
 
-    }
-
-    const phaseTwo = () => {
 
 
-    }
-
-
-    const phaseThree = () => {
-
-
-    }
-
-    const phaseFour = () => {
-
-
-    }
 
     const submit = () => {
 
+        console.log(".....")
+
+        console.log(name, toDate, fromDate, description, capacity, type, eventLocation)
 
     }
 
@@ -203,8 +189,9 @@ const CreateEvent = () => {
 
 
 
-            <ProgressSteps>
-                <ProgressStep label="First Step" onNext={() => phaseOne()}>
+            <ProgressSteps  >
+
+                <ProgressStep label="First Step" nextBtnDisabled={name ? false : true}>
 
                     <View style={{ alignItems: 'center', flexDirection: "column", flex: 1, }}>
                         <Item style={{ padding: 10, justifyContent: "center", marginTop: 25, }}>
@@ -277,7 +264,7 @@ const CreateEvent = () => {
 
 
 
-                <ProgressStep label="Second Step" onNext={() => phaseTwo()}>
+                <ProgressStep label="Second Step" nextBtnDisabled={image ? false : true}>
                     <View style={{ alignItems: 'center' }}>
 
                         <Text style={styles.dateHeader}>Choose An Image For Event</Text>
@@ -296,7 +283,7 @@ const CreateEvent = () => {
                     </View>
                 </ProgressStep>
 
-                <ProgressStep label="Third Step" onNext={() => phaseThree()} >
+                <ProgressStep label="Third Step" nextBtnDisabled={eventLocation ? false : true} >
 
                     <View style={{ flex: 1, height: 350 }}>
 
@@ -330,7 +317,7 @@ const CreateEvent = () => {
                 </ProgressStep>
 
 
-                <ProgressStep label="Fourth Step" onNext={() => phaseFour()} onSubmit={() => submit()}>
+                <ProgressStep label="Fourth Step" onSubmit={() => submit()}>
 
 
                     <View style={{ flex: 1 }}>
@@ -342,7 +329,7 @@ const CreateEvent = () => {
                         <Form style={{ width: "100%" }}>
 
                             <Text style={[styles.side, { marginTop: 25 }]}>Event Description :</Text>
-                            <Textarea rowSpan={5} bordered placeholder="Enter Event Description" onChangeText={(text) => setDescription(text)} />
+                            <Textarea rowSpan={5} value={description} bordered placeholder="Enter Event Description" onChangeText={(text) => setDescription(text)} />
 
 
                             <Text style={[styles.side, { marginTop: 25 }]}>Event Type :</Text>
@@ -362,6 +349,13 @@ const CreateEvent = () => {
 
                         </Form>
 
+
+                        <Text style={[styles.side, { marginTop: 25 }]}>Capacity :</Text>
+
+                        <Item style={{ padding: 10, justifyContent: "center", marginTop: 25, }}>
+                            <Icon name='user-circle-o' size={30} color="#009387" />
+                            <Input placeholder='Enter Event Capacity' style={{ marginLeft: 20 }} value={capacity} keyboardType={"numeric"} onChangeText={(text) => setCapacity(text)} />
+                        </Item>
 
 
                     </View>
