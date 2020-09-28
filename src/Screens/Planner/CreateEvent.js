@@ -8,7 +8,7 @@ import { Item, Input, Button, Picker, Form, Textarea, } from 'native-base';
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 
 import ImagePicker from 'react-native-image-crop-picker';
@@ -22,6 +22,7 @@ const CreateEvent = () => {
     let mapRef = useRef(null)
 
 
+    const [showAlert, setAlert] = useState(false)
 
 
     const [name, setName] = useState("")
@@ -33,6 +34,7 @@ const CreateEvent = () => {
     const [type, setType] = useState("")
     const [description, setDescription] = useState("")
     const [capacity, setCapacity] = useState("")
+    const [price, setPrice] = useState(null)
 
     const [region, setRegion] = useState({
         latitude: 10,
@@ -171,8 +173,12 @@ const CreateEvent = () => {
 
         console.log(".....")
 
-        console.log(name, toDate, fromDate, description, capacity, type, eventLocation)
+        console.log(name, toDate, fromDate, description, capacity, type, eventLocation, price)
 
+        if (!capacity || !price || !description) {
+
+            return setAlert(true)
+        }
     }
 
     const cancel = () => {
@@ -182,10 +188,36 @@ const CreateEvent = () => {
         setModal(!toggleModal)
     }
 
+
+    const hideAlert = () => {
+
+        setAlert(false)
+
+    }
+
     return (
         <View style={{ flex: 1 }}>
 
-
+            <AwesomeAlert
+                
+                show={showAlert}
+                showProgress={false}
+                title="Empty Fields"
+                message="Please Fill All Fields"
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={false}
+                showConfirmButton={true}
+               
+                confirmText="Okay"
+                confirmButtonColor="#DD6B55"
+                onCancelPressed={() => {
+                    hideAlert();
+                }}
+                onConfirmPressed={() => {
+                    hideAlert();
+                }}
+            />
 
 
 
@@ -322,10 +354,6 @@ const CreateEvent = () => {
 
                     <View style={{ flex: 1 }}>
 
-                        <Text style={[styles.dateHeader, { alignSelf: "center" }]}>Almost There ! </Text>
-
-
-
                         <Form style={{ width: "100%" }}>
 
                             <Text style={[styles.side, { marginTop: 25 }]}>Event Description :</Text>
@@ -352,9 +380,16 @@ const CreateEvent = () => {
 
                         <Text style={[styles.side, { marginTop: 25 }]}>Capacity :</Text>
 
-                        <Item style={{ padding: 10, justifyContent: "center", marginTop: 25, }}>
+                        <Item style={{ padding: 10, justifyContent: "center", marginTop: 15, }}>
                             <Icon name='user-circle-o' size={30} color="#009387" />
                             <Input placeholder='Enter Event Capacity' style={{ marginLeft: 20 }} value={capacity} keyboardType={"numeric"} onChangeText={(text) => setCapacity(text)} />
+                        </Item>
+
+                        <Text style={[styles.side, { marginTop: 25 }]}>Ticket Price :</Text>
+
+                        <Item style={{ padding: 10, justifyContent: "center", marginTop: 15, }}>
+                            <Icon name='ticket' size={30} color="#009387" />
+                            <Input placeholder='Enter Event Capacity' style={{ marginLeft: 20 }} value={price} keyboardType={"numeric"} onChangeText={(text) => setPrice(text)} />
                         </Item>
 
 
