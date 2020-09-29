@@ -15,9 +15,15 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import Map from './Map/Map'
 
-const CreateEvent = () => {
+import { connect } from 'react-redux'
+import { createEvent } from '../../Redux/Actions/Events/EventActions'
 
+const CreateEvent = ({ createEvent, planner }) => {
 
+    // console.log("///////////////")
+    // console.log(planner)
+
+    const by = planner.name
 
     let mapRef = useRef(null)
 
@@ -26,7 +32,7 @@ const CreateEvent = () => {
 
 
     const [name, setName] = useState("")
-    const [image, setImage] = useState("")
+    const [picture, setImage] = useState("")
     const [location, setLocation] = useState("")
 
     const [eventLocation, setEventLocation] = useState(null)
@@ -77,6 +83,8 @@ const CreateEvent = () => {
         fetch(`http://api.positionstack.com/v1/forward?access_key=b060536a5abca8391d7dbb68ac74ace8&query=${location}`)
             .then((res) => res.json())
             .then(response => {
+
+                console.log(response)
 
                 console.log(response.data[0].country)
                 console.log(response.data[0].county)
@@ -173,11 +181,20 @@ const CreateEvent = () => {
 
         console.log(".....")
 
-        console.log(name, toDate, fromDate, description, capacity, type, eventLocation, price)
+
 
         if (!capacity || !price || !description) {
 
             return setAlert(true)
+
+        } else {
+
+            //  console.log(name, toDate, fromDate, description, capacity, type, eventLocation, price)
+
+            createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation)
+
+
+
         }
     }
 
@@ -199,7 +216,7 @@ const CreateEvent = () => {
         <View style={{ flex: 1 }}>
 
             <AwesomeAlert
-                
+
                 show={showAlert}
                 showProgress={false}
                 title="Empty Fields"
@@ -208,7 +225,7 @@ const CreateEvent = () => {
                 closeOnHardwareBackPress={false}
                 showCancelButton={false}
                 showConfirmButton={true}
-               
+
                 confirmText="Okay"
                 confirmButtonColor="#DD6B55"
                 onCancelPressed={() => {
@@ -296,12 +313,12 @@ const CreateEvent = () => {
 
 
 
-                <ProgressStep label="Second Step" nextBtnDisabled={image ? false : true}>
+                <ProgressStep label="Second Step" nextBtnDisabled={picture ? false : true}>
                     <View style={{ alignItems: 'center' }}>
 
                         <Text style={styles.dateHeader}>Choose An Image For Event</Text>
                         <Image style={styles.image}
-                            source={image ? { uri: 'data:image/jpeg;base64,' + image.data } : { uri: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&w=1000&q=80" }} />
+                            source={picture ? { uri: 'data:image/jpeg;base64,' + picture.data } : { uri: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&w=1000&q=80" }} />
 
                         <Button style={{ width: 160, justifyContent: "center", alignSelf: "center", marginTop: 50 }}
                             iconLeft transparent success
@@ -461,4 +478,26 @@ const styles = StyleSheet.create({
 
 })
 
-export default CreateEvent;
+const mapDispatch = (dispatch) => {
+
+
+    return {
+
+        createEvent: (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation) =>
+            dispatch(createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation))
+    }
+
+
+}
+
+
+const mapState = (state) => {
+
+    return {
+
+        planner: state.auth
+    }
+
+}
+
+export default connect(mapState, mapDispatch)(CreateEvent);
