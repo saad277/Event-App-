@@ -18,7 +18,7 @@ import Map from './Map/Map'
 import { connect } from 'react-redux'
 import { createEvent } from '../../Redux/Actions/Events/EventActions'
 
-const CreateEvent = ({ createEvent, planner }) => {
+const CreateEvent = ({ createEvent, planner, navigation }) => {
 
     // console.log("///////////////")
     // console.log(planner)
@@ -27,17 +27,22 @@ const CreateEvent = ({ createEvent, planner }) => {
 
     let mapRef = useRef(null)
 
+    //alert states
+
+    const [showAlert2, setAlert2] = useState(false)
 
     const [showAlert, setAlert] = useState(false)
+    const [alertHeader, setAheader] = useState("Empty Fields")
+    const [alertText, setAtext] = useState("Please Fill All Fields")
 
 
+
+    //event states
     const [name, setName] = useState("")
     const [picture, setImage] = useState("")
     const [location, setLocation] = useState("")
-
     const [eventLocation, setEventLocation] = useState(null)
-
-    const [type, setType] = useState("")
+    const [type, setType] = useState("Festival")
     const [description, setDescription] = useState("")
     const [capacity, setCapacity] = useState("")
     const [price, setPrice] = useState(null)
@@ -63,6 +68,20 @@ const CreateEvent = ({ createEvent, planner }) => {
 
     //console.log(date)
 
+
+    const settingAlert = () => {
+
+        setAlert2(true)
+
+    }
+
+    const errorAlert = (header,text) => {
+
+        setAheader(header)
+        setAtext(text)
+        setAlert(true)
+
+    }
 
     const chooseImage = () => {
 
@@ -191,19 +210,13 @@ const CreateEvent = ({ createEvent, planner }) => {
 
             //  console.log(name, toDate, fromDate, description, capacity, type, eventLocation, price)
 
-            createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation)
+            createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, settingAlert, errorAlert)
 
 
 
         }
     }
 
-    const cancel = () => {
-
-
-        setName("")
-        setModal(!toggleModal)
-    }
 
 
     const hideAlert = () => {
@@ -212,15 +225,17 @@ const CreateEvent = ({ createEvent, planner }) => {
 
     }
 
+
+
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "white" }}>
 
             <AwesomeAlert
 
-                show={showAlert}
+                show={showAlert2}
                 showProgress={false}
-                title="Empty Fields"
-                message="Please Fill All Fields"
+                title={"Event Saved"}
+                message={"Your Event has been created"}
                 closeOnTouchOutside={true}
                 closeOnHardwareBackPress={false}
                 showCancelButton={false}
@@ -228,9 +243,29 @@ const CreateEvent = ({ createEvent, planner }) => {
 
                 confirmText="Okay"
                 confirmButtonColor="#DD6B55"
-                onCancelPressed={() => {
-                    hideAlert();
+
+                onConfirmPressed={() => {
+
+                    navigation.navigate("MyEvents")
+
                 }}
+            />
+
+
+            <AwesomeAlert
+
+                show={showAlert}
+                showProgress={false}
+                title={alertHeader}
+                message={alertText}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+                showCancelButton={false}
+                showConfirmButton={true}
+
+                confirmText="Okay"
+                confirmButtonColor="#DD6B55"
+
                 onConfirmPressed={() => {
                     hideAlert();
                 }}
@@ -301,9 +336,6 @@ const CreateEvent = ({ createEvent, planner }) => {
                         </Item>
 
 
-                        <Button danger style={styles.btnContainer} onPress={() => cancel()}>
-                            <Text style={styles.btnText}>Cancel</Text>
-                        </Button>
 
 
 
@@ -318,7 +350,7 @@ const CreateEvent = ({ createEvent, planner }) => {
 
                         <Text style={styles.dateHeader}>Choose An Image For Event</Text>
                         <Image style={styles.image}
-                            source={picture ? { uri: 'data:image/jpeg;base64,' + picture.data } : { uri: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&w=1000&q=80" }} />
+                            source={picture ? { uri: 'data:image/jpeg;base64,' + picture.data } : { uri: "https://thumbs.dreamstime.com/b/camera-plus-line-icon-add-photo-vector-166966023.jpg" }} />
 
                         <Button style={{ width: 160, justifyContent: "center", alignSelf: "center", marginTop: 50 }}
                             iconLeft transparent success
@@ -483,8 +515,8 @@ const mapDispatch = (dispatch) => {
 
     return {
 
-        createEvent: (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation) =>
-            dispatch(createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation))
+        createEvent: (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error) =>
+            dispatch(createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error))
     }
 
 

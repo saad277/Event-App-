@@ -7,7 +7,7 @@ import { baseUrl } from '../../../BaseUrl/baseUrl'
 import AsyncStorage from '@react-native-community/async-storage'
 
 
-export const createEvent = (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation) => {
+export const createEvent = (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation,alert,error) => {
 
 
     return async (dispatch) => {
@@ -16,13 +16,15 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
         const token = await AsyncStorage.getItem("plannerToken")
 
 
-        console.log(picture)
+        console.log(eventLocation)
 
-      let source ={
-            uri:picture.path,
-            type:picture.mime,
-            name:"yolo"
-      }
+        //console.log(picture)
+
+        let source = {
+            uri: picture.path,
+            type: picture.mime,
+            name: "event_picture"
+        }
 
 
         const data = new FormData()
@@ -41,6 +43,53 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
             .then((data) => {
                 console.log(data.secure_url)
 
+
+
+                fetch(baseUrl + "createEvent", {
+
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': "Bearer " + token
+                    },
+
+                    body: JSON.stringify({
+                        "name": name,
+                        "description": description,
+                        "type": type,
+                        "fromDate": fromDate,
+                        "toDate": toDate,
+                        "capacity": capacity,
+                        "price": price,
+                        "by": by,
+                        "picture": data.secure_url,
+                        "eventLocation":eventLocation
+
+
+                    })
+
+
+
+
+                })
+                .then((res)=>res.json())
+                .then((response)=>{
+
+                    console.log(response)
+
+                    if(response.success){
+
+                            alert()
+                    } else{
+
+                            error("Error",response.error)
+                    }
+
+                })
+
+
+
+
             })
             .catch((error) => console.log(error))
 
@@ -49,38 +98,7 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
 
 
 
-        // fetch(baseUrl + "createEvent", {
 
-        //     method: "POST",
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization': "Bearer " + token
-        //     },
-
-        //     body: JSON.stringify({
-        //         "name": name,
-        //         "description": description,
-        //         "type": type,
-        //         "fromDate": fromDate,
-        //         "toDate": toDate,
-        //         "capacity": capacity,
-        //         "price": price,
-        //         "by": by,
-        //         "picture": picture,
-        //         "country": eventLocation.country,
-        //         "city": eventLocation.county,
-        //         "loc": {
-        //             "type": "Point",
-        //             "coordinates": [eventLocation.latitude, eventLocation.longitude]
-        //         }
-
-
-        //     })
-
-
-
-
-        // })
 
 
 
