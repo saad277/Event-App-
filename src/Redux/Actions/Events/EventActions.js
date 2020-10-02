@@ -1,13 +1,13 @@
 
 
-import { CREATE_EVENT } from './ActionTypes'
+import { CREATE_EVENT, FETCH_EVENTS } from './ActionTypes'
 
 import { baseUrl } from '../../../BaseUrl/baseUrl'
 
 import AsyncStorage from '@react-native-community/async-storage'
 
 
-export const createEvent = (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation,alert,error) => {
+export const createEvent = (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error, fetchUpdated) => {
 
 
     return async (dispatch) => {
@@ -31,6 +31,8 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
         data.append("file", source)
         data.append("upload_preset", "event_app")
         data.append("cloud_name", "saad277")
+
+
         fetch("https://api.cloudinary.com/v1_1/saad277/image/upload", {
             method: "POST",
             body: data,
@@ -63,7 +65,7 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
                         "price": price,
                         "by": by,
                         "picture": data.secure_url,
-                        "eventLocation":eventLocation
+                        "eventLocation": eventLocation
 
 
                     })
@@ -72,20 +74,21 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
 
 
                 })
-                .then((res)=>res.json())
-                .then((response)=>{
+                    .then((res) => res.json())
+                    .then((response) => {
 
-                    console.log(response)
+                        console.log(response)
 
-                    if(response.success){
+                        if (response.success) {
 
+                            fetchUpdated()
                             alert()
-                    } else{
+                        } else {
 
-                            error("Error",response.error)
-                    }
+                            error("Error", response.error)
+                        }
 
-                })
+                    })
 
 
 
@@ -104,4 +107,41 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
 
 
     }
+}
+
+
+
+
+export const fetchEvents = () => {
+
+    return async (dispatch) => {
+
+        const token = await AsyncStorage.getItem("plannerToken")
+
+
+
+        fetch(baseUrl + "myEvents", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            },
+        })
+            .then((res) => res.json())
+            .then((response) => {
+
+                // console.log(response.result)
+
+                dispatch({
+
+                    type: FETCH_EVENTS,
+                    payload: response.result
+                })
+
+
+            })
+
+
+    }
+
 }

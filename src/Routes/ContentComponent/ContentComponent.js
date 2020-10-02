@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 const CustomDrawerContentComponent = (props) => {
 
 
-    console.log(props.auth)
+    //console.log(props.auth)
 
 
 

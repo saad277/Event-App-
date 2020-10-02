@@ -3,6 +3,7 @@ import { createStore, combineReducers, applyMiddleware, compose, } from 'redux'
 import thunk from 'redux-thunk'
 
 import AuthReducer from './Reducers/AuthReducer'
+import EventReducer from './Reducers/EventReducer'
 
 //import logger from 'redux-logger'
 //import { composeWithDevTools } from 'remote-redux-devtools';
@@ -10,7 +11,8 @@ import AuthReducer from './Reducers/AuthReducer'
 const rootReducer = combineReducers({
 
 
-    auth: AuthReducer
+    auth: AuthReducer,
+    event: EventReducer
 
 
 })

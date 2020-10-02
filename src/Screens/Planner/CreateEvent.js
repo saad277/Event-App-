@@ -16,9 +16,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Map from './Map/Map'
 
 import { connect } from 'react-redux'
-import { createEvent } from '../../Redux/Actions/Events/EventActions'
+import { createEvent, fetchEvents } from '../../Redux/Actions/Events/EventActions'
 
-const CreateEvent = ({ createEvent, planner, navigation }) => {
+const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
 
     // console.log("///////////////")
     // console.log(planner)
@@ -75,7 +75,7 @@ const CreateEvent = ({ createEvent, planner, navigation }) => {
 
     }
 
-    const errorAlert = (header,text) => {
+    const errorAlert = (header, text) => {
 
         setAheader(header)
         setAtext(text)
@@ -210,7 +210,7 @@ const CreateEvent = ({ createEvent, planner, navigation }) => {
 
             //  console.log(name, toDate, fromDate, description, capacity, type, eventLocation, price)
 
-            createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, settingAlert, errorAlert)
+            createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, settingAlert, errorAlert, fetchEvents)
 
 
 
@@ -515,8 +515,9 @@ const mapDispatch = (dispatch) => {
 
     return {
 
-        createEvent: (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error) =>
-            dispatch(createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error))
+        createEvent: (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error, fetch) =>
+            dispatch(createEvent(name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error, fetch)),
+        fetchEvents: () => dispatch(fetchEvents())
     }
 
 
