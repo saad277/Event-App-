@@ -10,11 +10,10 @@ import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import asyncStorage from '@react-native-community/async-storage'
+
 
 import { MyEventStack, IncomeStack, SettingsStack } from './StackNavigators'
 
-import { connect } from 'react-redux'
 
 import CustomDrawerContentComponent from './ContentComponent/ContentComponent'
 

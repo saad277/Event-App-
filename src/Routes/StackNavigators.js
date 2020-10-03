@@ -5,13 +5,14 @@
 import React from 'react'
 
 
-import { View, Text, ScrollView, StyleSheet, SafeAreaView, Image } from 'react-native'
 
 
-import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer'
+
+
 import { createStackNavigator } from 'react-navigation-stack'
 
 import MyEvents from '../Screens/Planner/MyEvents'
+import EventDetails from '../Screens/Planner/EventDetails'
 import Income from '../Screens/Planner/Income'
 import Settings from '../Screens/Planner/Settings'
 
@@ -34,13 +35,35 @@ export const MyEventStack = createStackNavigator({
             return {
 
                 headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
-                title: "My Events",
-                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{marginRight:10}} />,
+                 title: "My Events",
+
+                 headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
             }
+        }
+    },
+
+    EventDetails: {
+
+        screen: EventDetails,
+        navigationOptions: ({ navigation }) => {
+
+            
+            const title=navigation.getParam("item").name
+            return {
+                 headerLeft: () => <Icon name="arrow-left" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.navigate("MyEvents")}  />,
+
+                 headerTitle:title.charAt(0).toUpperCase() + title.slice(1)
+                 
+
+            }
+
         }
     }
 
 
+},{
+
+    initialRouteName:"MyEvents"
 })
 
 
@@ -52,8 +75,8 @@ export const IncomeStack = createStackNavigator({
 
             return {
 
-                headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
-                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{marginRight:10}} />,
+                 headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
+                 headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
             }
         }
 
@@ -70,8 +93,8 @@ export const SettingsStack = createStackNavigator({
 
             return {
 
-                headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
-                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{marginRight:10}} />,
+                 headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
+                 headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
             }
         }
     }

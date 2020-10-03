@@ -16,7 +16,7 @@ const Login = ({ navigation, signIn, }) => {
 
 
 
-    const [email, setEmail] = useState("saad@gmail.com")
+    const [email, setEmail] = useState("saad2@gmail.com")
     const [password, setPassword] = useState("123")
 
     const [errors, setError] = useState([])

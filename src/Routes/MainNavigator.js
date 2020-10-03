@@ -33,28 +33,12 @@ const Planner = createStackNavigator({
         screen: PlannerStack,
         navigationOptions: ({ navigation }) => {
 
-            let name;
-
-          //  console.log(navigation.state)
-
-            if (navigation.state.index == 0) {
-
-                name = "My Events"
-            } else if (navigation.state.index == 1) {
-
-                name = "Income"
-
-            } else if (navigation.state.index == 2) {
-
-                name = "Settings"
-
-            }
+        
 
             return {
 
-                title: name,
-                headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
-                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} onPress={() => navigation.navigate("CreateEvent")} />,
+                headerShown:false
+       
             }
         }
     },

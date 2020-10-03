@@ -6,31 +6,33 @@ import { connect } from 'react-redux'
 
 import { fetchEvents } from '../../Redux/Actions/Events/EventActions'
 
-import { ListItem, Divider, Avatar } from 'react-native-elements'
+import { ListItem, Avatar } from 'react-native-elements'
 
 
-const MyEvents = ({ fetchEvents, myEvents }) => {
+const MyEvents = ({ fetchEvents, myEvents, navigation }) => {
 
 
-  
+
 
     const keyExtractor = (item, index) => index.toString()
 
     const renderItem = ({ item }) => (
-        <ListItem bottomDivider style={styles.listItem}>
-            <Avatar size="large" source={{ uri: item.picture }} />
-            <ListItem.Content>
-                <ListItem.Title style={styles.title}>{item.name}</ListItem.Title>
-                <ListItem.Subtitle>{item.type}</ListItem.Subtitle>
-            </ListItem.Content>
-            <Text style={styles.price}>$ {item.price}</Text>
-        </ListItem>
+        <TouchableOpacity onPress={() => { navigation.navigate("EventDetails", { item }) }}>
+            <ListItem bottomDivider style={styles.listItem}>
+                <Avatar size="large" source={{ uri: item.picture }} />
+                <ListItem.Content>
+                    <ListItem.Title style={styles.title}>{item.name}</ListItem.Title>
+                    <ListItem.Subtitle>{item.type}</ListItem.Subtitle>
+                </ListItem.Content>
+                <Text style={styles.price}>$ {item.price}</Text>
+            </ListItem>
+        </TouchableOpacity>
     )
 
 
 
-    console.log(".........")
-    console.log(myEvents)
+  //  console.log(".........")
+  //  console.log(myEvents)
 
     useEffect(() => {
 
@@ -66,14 +68,14 @@ const styles = StyleSheet.create({
 
         color: "#009387",
         fontSize: 20,
-        fontWeight:"900"
+        fontWeight: "900"
     },
 
-    title:{
+    title: {
 
-        color:"black",
-        fontSize:25,
-        fontWeight:"bold",
+        color: "black",
+        fontSize: 25,
+        fontWeight: "bold",
         textTransform: 'capitalize',
     },
 

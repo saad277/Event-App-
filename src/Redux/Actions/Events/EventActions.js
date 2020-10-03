@@ -77,7 +77,7 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
                     .then((res) => res.json())
                     .then((response) => {
 
-                        console.log(response)
+                      //  console.log(response)
 
                         if (response.success) {
 
