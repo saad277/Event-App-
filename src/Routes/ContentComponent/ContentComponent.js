@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     drawerHeader: {
-        backgroundColor: "lightblue",
+        
+        backgroundColor:"lightgray",
         height: 180,
         alignItems: "center",
         justifyContent: "center",
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         flexDirection: "column"
     },
     drawerHeaderText: {
-        color: "black",
+        color: "#009387",
         fontSize: 20,
         fontWeight: "bold"
     },
