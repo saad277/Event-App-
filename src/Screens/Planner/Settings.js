@@ -92,6 +92,7 @@ const Settings = ({ navigation, logOut, auth }) => {
                                 color: "white"
                             }}
                             title="Logout"
+                            onPress={() => logout()}
 
                         />
                     </View>

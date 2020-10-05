@@ -1,6 +1,6 @@
 
 
-import { CREATE_EVENT, FETCH_EVENTS } from './ActionTypes'
+import { CREATE_EVENT, FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS } from './ActionTypes'
 
 import { baseUrl } from '../../../BaseUrl/baseUrl'
 
@@ -77,7 +77,7 @@ export const createEvent = (name, description, type, fromDate, toDate, capacity,
                     .then((res) => res.json())
                     .then((response) => {
 
-                      //  console.log(response)
+                        //  console.log(response)
 
                         if (response.success) {
 

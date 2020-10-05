@@ -49,7 +49,8 @@ const UserTabNavigator = createBottomTabNavigator({
         navigationOptions: () => {
 
             return {
-
+                
+                title:"My Events",
                 tabBarIcon: ({ tintColor }) => {
 
                     return <Icon name="calendar" size={26} color={tintColor} />

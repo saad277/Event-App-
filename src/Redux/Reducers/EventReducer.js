@@ -1,6 +1,6 @@
-import { FETCH_EVENTS } from '../Actions/Events/ActionTypes'
+import { FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS } from '../Actions/Events/ActionTypes'
 
-const iState = null
+const iState = {}
 
 
 
