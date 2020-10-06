@@ -37,7 +37,7 @@ export const MyEventStack = createStackNavigator({
                 headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
                 title: "My Events",
 
-                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
+                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} onPress={() => navigation.navigate("CreateEvent")} />,
             }
         }
     },
@@ -54,7 +54,7 @@ export const MyEventStack = createStackNavigator({
 
                 // headerTitle: title.charAt(0).toUpperCase() + title.slice(1),
 
-                headerShown:false
+                headerShown: false
 
 
 
@@ -80,7 +80,7 @@ export const IncomeStack = createStackNavigator({
             return {
 
                 headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
-                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
+                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} onPress={() => navigation.navigate("CreateEvent")} />,
             }
         }
 
@@ -98,7 +98,7 @@ export const SettingsStack = createStackNavigator({
             return {
 
                 headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
-                headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
+               // headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
             }
         }
     }

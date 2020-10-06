@@ -1,6 +1,10 @@
 import { FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS } from '../Actions/Events/ActionTypes'
 
-const iState = {}
+const iState = {
+
+
+    random: []
+}
 
 
 
@@ -19,6 +23,11 @@ const eventReducer = (state = iState, action) => {
 
             return action.payload
 
+        case USER_FETCH_RANDOM_EVENTS:
+            return {
+                ...state,
+                random: action.payload
+            }
         default:
             return state
     }

@@ -236,7 +236,7 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
                 showProgress={false}
                 title={"Event Saved"}
                 message={"Your Event has been created"}
-                closeOnTouchOutside={true}
+                closeOnTouchOutside={false}
                 closeOnHardwareBackPress={false}
                 showCancelButton={false}
                 showConfirmButton={true}

@@ -145,3 +145,43 @@ export const fetchEvents = () => {
     }
 
 }
+
+
+
+
+export const fetchRandomEvents = () => {
+
+
+    return async (dispatch) => {
+
+
+        const token = await AsyncStorage.getItem("userToken")
+
+        fetch(baseUrl + "homeEvents", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            },
+
+        }).then((res) => res.json())
+            .then((response) => {
+
+               // console.log(response.result)
+
+
+                dispatch({
+
+                    type: USER_FETCH_RANDOM_EVENTS,
+                    payload: response.result
+                })
+
+
+
+            })
+
+
+    }
+
+
+}
