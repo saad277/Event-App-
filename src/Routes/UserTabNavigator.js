@@ -1,13 +1,47 @@
 import React from 'react'
 
 import { createBottomTabNavigator } from 'react-navigation-tabs'
+import { createStackNavigator } from 'react-navigation-stack'
 
 import Home from '../Screens/User/Home'
 import Nearby from '../Screens/User/Nearby'
 import Upcoming from '../Screens/User/Upcoming'
 import Settings from '../Screens/User/Settings'
+import AllEvents from '../Screens/User/AllEvents'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+
+const HomeStack = createStackNavigator({
+
+    Home: {
+
+        screen: Home,
+        navigationOptions: () => {
+
+            return {
+
+                headerShown: false
+            }
+
+        }
+    },
+
+    AllEvents: {
+        screen: AllEvents,
+        navigationOptions: () => {
+
+            return {
+
+
+                headerShown: false
+            }
+
+        }
+    }
+
+
+})
 
 const UserTabNavigator = createBottomTabNavigator({
 
@@ -15,7 +49,7 @@ const UserTabNavigator = createBottomTabNavigator({
 
     Home: {
 
-        screen: Home,
+        screen: HomeStack,
         navigationOptions: () => {
 
             return {
@@ -49,8 +83,8 @@ const UserTabNavigator = createBottomTabNavigator({
         navigationOptions: () => {
 
             return {
-                
-                title:"My Events",
+
+                title: "My Events",
                 tabBarIcon: ({ tintColor }) => {
 
                     return <Icon name="calendar" size={26} color={tintColor} />

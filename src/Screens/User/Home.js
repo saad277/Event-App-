@@ -3,7 +3,7 @@
 
 import React, { useEffect } from 'react'
 
-import { View, Text, SafeAreaView, TextInput, StyleSheet, Platform, StatusBar, ScrollView, Image, Dimensions, FlatList } from 'react-native'
+import { View, Text, SafeAreaView, TextInput, StyleSheet, Platform, StatusBar, ScrollView, Image, Dimensions, FlatList, TouchableOpacity } from 'react-native'
 
 import Ionicon from 'react-native-vector-icons/Ionicons'
 
@@ -15,7 +15,7 @@ import { connect } from 'react-redux'
 
 import { fetchRandomEvents } from '../../Redux/Actions/Events/EventActions'
 
-const Home = ({ fetchRandomEvents, random }) => {
+const Home = ({ fetchRandomEvents, random, navigation }) => {
 
 
 
@@ -28,7 +28,7 @@ const Home = ({ fetchRandomEvents, random }) => {
     const heights = Platform.OS === "android" ? 100 + StatusBar.currentHeight : 80
 
 
-    console.log(random.length)
+    //console.log(random.length)
 
     let firstHalf = random.slice(0, 3)
 
@@ -81,10 +81,16 @@ const Home = ({ fetchRandomEvents, random }) => {
                             <Text style={{ fontWeight: "100", marginTop: 10 }}>More Events Satisfying Your Interest</Text>
                         </View>
 
-                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "flex-end" }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("AllEvents") } style={{ flex: 1, flexDirection: "row", justifyContent: "flex-end" }}>
+
+
+
+
                             <Text style={{ fontSize: 24, fontWeight: "700", color: "#009387", }}>View All</Text>
                             <Ionicon name={'arrow-forward'} size={25} color={"#009387"} style={{ marginTop: 5 }} />
-                        </View>
+
+
+                        </TouchableOpacity>
 
                     </View>
 

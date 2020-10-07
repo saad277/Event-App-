@@ -139,7 +139,7 @@ export const fetchEvents = () => {
                 })
 
 
-            })
+            }).catch((error) => console.log(error))
 
 
     }
@@ -178,7 +178,7 @@ export const fetchRandomEvents = () => {
 
 
 
-            })
+            }).catch((error) => console.log(error))
 
 
     }
