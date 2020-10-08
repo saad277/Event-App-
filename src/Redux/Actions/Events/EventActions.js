@@ -1,6 +1,6 @@
 
 
-import { CREATE_EVENT, FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS } from './ActionTypes'
+import { CREATE_EVENT, FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS } from './ActionTypes'
 
 import { baseUrl } from '../../../BaseUrl/baseUrl'
 
@@ -167,7 +167,7 @@ export const fetchRandomEvents = () => {
         }).then((res) => res.json())
             .then((response) => {
 
-               // console.log(response.result)
+                // console.log(response.result)
 
 
                 dispatch({
@@ -180,6 +180,45 @@ export const fetchRandomEvents = () => {
 
             }).catch((error) => console.log(error))
 
+
+    }
+
+
+}
+
+
+
+export const fetchAllEvents = () => {
+
+
+    return async (dispatch) => {
+
+
+        const token = await AsyncStorage.getItem("userToken")
+
+
+        fetch(baseUrl + "allEvents", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            },
+
+        }).then((res) => res.json())
+            .then((response) => {
+
+                // console.log(response.result)
+
+
+                dispatch({
+
+                    type: FETCH_ALL_EVENTS,
+                    payload: response.result
+                })
+
+
+
+            }).catch((error) => console.log(error))
 
     }
 

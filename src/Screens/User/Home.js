@@ -62,9 +62,9 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
                         showsHorizontalScrollIndicator={false}
                     >
 
-                        {firstHalf.map((x) => {
+                        {firstHalf.map((x, i) => {
 
-                            return <FeaturedItem name={x.name} picture={x.picture} />
+                            return <FeaturedItem name={x.name} picture={x.picture} key={i} />
                         })}
 
 
@@ -81,7 +81,7 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
                             <Text style={{ fontWeight: "100", marginTop: 10 }}>More Events Satisfying Your Interest</Text>
                         </View>
 
-                        <TouchableOpacity onPress={() => navigation.navigate("AllEvents") } style={{ flex: 1, flexDirection: "row", justifyContent: "flex-end" }}>
+                        <TouchableOpacity onPress={() => navigation.navigate("AllEvents")} style={{ flex: 1, flexDirection: "row", justifyContent: "flex-end" }}>
 
 
 
@@ -102,9 +102,9 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
                         showsHorizontalScrollIndicator={false}
                     >
 
-                        {secondHalf.map((x) => {
+                        {secondHalf.map((x, i) => {
 
-                            return <MoreItems picture={x.picture} />
+                            return <MoreItems key={i} picture={x.picture} />
                         })}
                     </ScrollView>
 

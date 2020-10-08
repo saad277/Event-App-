@@ -10,9 +10,18 @@ import Ionicon from 'react-native-vector-icons/Ionicons'
 
 import { ListItem, Avatar } from 'react-native-elements'
 
+import { fetchAllEvents } from '../../Redux/Actions/Events/EventActions'
 
-const AllEvents = () => {
+const AllEvents = ({ fetchAllEvents, all }) => {
 
+
+
+    useEffect(() => {
+
+
+        fetchAllEvents()
+
+    }, [])
 
     const heights = Platform.OS === "android" ? 100 + StatusBar.currentHeight : 80
 
@@ -30,6 +39,25 @@ const AllEvents = () => {
                     />
                 </View>
             </View>
+
+            <ScrollView>
+                {all.map((x) => {
+
+                    return (
+
+                        <ListItem bottomDivider >
+                            <Avatar size="medium" rounded source={{ uri: x.picture }} />
+                            <ListItem.Content style={{borderColor:"#009387"}}>
+                                <ListItem.Title style={{textTransform:"capitalize",fontWeight:"bold"}}>{x.name}</ListItem.Title>
+                                <ListItem.Subtitle>{x.city}</ListItem.Subtitle>
+                            </ListItem.Content>
+                            <ListItem.Chevron />
+                        </ListItem>
+
+
+                    )
+                })}
+            </ScrollView>
 
         </View>
     )
@@ -57,4 +85,26 @@ const styles = StyleSheet.create({
 
 })
 
-export default AllEvents;
+const dispatchState = (dispatch) => {
+
+
+    return {
+
+        fetchAllEvents: () => dispatch(fetchAllEvents())
+    }
+
+}
+
+
+const mapState = (state) => {
+
+
+    return {
+
+        all: state.event.all
+    }
+
+}
+
+
+export default connect(mapState, dispatchState)(AllEvents);
