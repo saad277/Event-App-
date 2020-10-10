@@ -195,6 +195,8 @@ dependencies {
      implementation project(':lottie-react-native')
      implementation project(':@react-native-community_datetimepicker')
      implementation project(':react-native-maps')
+     implementation project(':react-native-community-geolocation')
+     implementation project(':react-native-permissions')
 
 
       implementation 'com.android.support:multidex:2.0.1'

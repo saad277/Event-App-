@@ -1,10 +1,11 @@
-import { FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS } from '../Actions/Events/ActionTypes'
+import { FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS, FETCH_NEARBY } from '../Actions/Events/ActionTypes'
 
 const iState = {
 
 
     random: [],
-    all: []
+    all: [],
+    nearby: []
 }
 
 
@@ -34,6 +35,11 @@ const eventReducer = (state = iState, action) => {
             return {
                 ...state,
                 all: action.payload
+            }
+        case FETCH_NEARBY:
+            return {
+                ...state,
+                nearby: action.payload
             }
         default:
             return state

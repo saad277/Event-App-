@@ -16,6 +16,8 @@ import com.BV.LinearGradient.LinearGradientPackage; // <--- This!
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.airbnb.android.react.maps.MapsPackage;
+import com.reactnativecommunity.geolocation.GeolocationPackage;
+import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -35,7 +37,9 @@ public class MainApplication extends Application implements ReactApplication {
           new VectorIconsPackage();
           new LinearGradientPackage();
           new MapsPackage();
+          new GeolocationPackage();
           packages.add(new LottiePackage());
+          
         
           return packages;
         }

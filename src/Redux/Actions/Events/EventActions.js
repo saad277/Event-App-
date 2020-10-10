@@ -1,6 +1,6 @@
 
 
-import { CREATE_EVENT, FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS } from './ActionTypes'
+import { CREATE_EVENT, FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS, FETCH_NEARBY } from './ActionTypes'
 
 import { baseUrl } from '../../../BaseUrl/baseUrl'
 
@@ -213,6 +213,53 @@ export const fetchAllEvents = () => {
                 dispatch({
 
                     type: FETCH_ALL_EVENTS,
+                    payload: response.result
+                })
+
+
+
+            }).catch((error) => console.log(error))
+
+    }
+
+
+}
+
+
+
+
+
+
+export const fetchNearby = (latitude, longitude) => {
+
+
+    return async (dispatch) => {
+
+
+        const token = await AsyncStorage.getItem("userToken")
+
+
+        fetch(baseUrl + "findNearestEvent", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            },
+            body: JSON.stringify({
+
+                "latitude": latitude,
+                "longitude": longitude
+            })
+
+        }).then((res) => res.json())
+            .then((response) => {
+
+                 console.log(response.result)
+
+
+                dispatch({
+
+                    type: FETCH_NEARBY,
                     payload: response.result
                 })
 
