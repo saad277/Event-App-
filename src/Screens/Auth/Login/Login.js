@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { View, Text, StyleSheet, Button, TouchableOpacity, Dimensions, Platform, TextInput, StatusBar, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Dimensions, Platform, TextInput, StatusBar, ImageBackground } from 'react-native'
 
 import * as Animateable from 'react-native-animatable'
 import LinearGradient from 'react-native-linear-gradient'
@@ -16,7 +16,7 @@ const Login = ({ navigation, signIn, }) => {
 
 
 
-    const [email, setEmail] = useState("saad2@gmail.com")
+    const [email, setEmail] = useState("saad9@gmail.com")
     const [password, setPassword] = useState("123")
 
     const [errors, setError] = useState([])
@@ -60,6 +60,9 @@ const Login = ({ navigation, signIn, }) => {
 
 
             signIn(email, password, navigation)
+
+            setEmail("")
+            setPassword("")
         }
         else {
 
@@ -80,73 +83,73 @@ const Login = ({ navigation, signIn, }) => {
 
             style={styles.container}
             source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}>
-            <StatusBar color="black" />
+            <StatusBar backgroundColor="#009387" />
             <View style={styles.header}>
                 <Text style={styles.textHeader}>Welcome !</Text>
             </View>
             <Animateable.View style={styles.footer} animation="fadeInUpBig"  >
 
+                <ScrollView>
+                    <Text style={styles.textFooter}>Email</Text>
 
-                <Text style={styles.textFooter}>Email</Text>
-
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="user-o"
-                        color="#05375a"
-                        size={20}
-                    />
-                    <TextInput
-                        placeholder="Enter Email"
-                        onChangeText={(text) => setEmail(text)}
-                        value={email}
-                        style={styles.textInput}
-                        autoCapitalize="none"
-
-
-                    />
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="user-o"
+                            color="#05375a"
+                            size={20}
+                        />
+                        <TextInput
+                            placeholder="Enter Email"
+                            onChangeText={(text) => setEmail(text)}
+                            value={email}
+                            style={styles.textInput}
+                            autoCapitalize="none"
 
 
-                </View>
+                        />
 
-                <Text style={[styles.textFooter, { marginTop: 35 }]}>Password</Text>
 
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="lock"
-                        color="#05375a"
-                        size={20}
-                    />
-                    <TextInput
-                        placeholder="Enter Password"
-                        onChangeText={(text) => setPassword(text)}
-                        value={password}
-                        style={styles.textInput}
-                        autoCapitalize="none"
-                        secureTextEntry={true}
+                    </View>
 
-                    />
+                    <Text style={[styles.textFooter, { marginTop: 35 }]}>Password</Text>
 
-                </View>
-                <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
-                <View style={styles.button} >
-                    <LinearGradient
-                        colors={["#08d4c4", "#01ab9d"]}
-                        style={styles.signIn}
-                    >
-                        <Text style={[styles.textSign, { color: "#fff" }]} onPress={() => handleSubmit()} >Sign In</Text>
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="lock"
+                            color="#05375a"
+                            size={20}
+                        />
+                        <TextInput
+                            placeholder="Enter Password"
+                            onChangeText={(text) => setPassword(text)}
+                            value={password}
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            secureTextEntry={true}
 
-                    </LinearGradient>
+                        />
 
-                    <TouchableOpacity
+                    </View>
+                    <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
+                    <View style={styles.button} >
+                        <LinearGradient
+                            colors={["#08d4c4", "#01ab9d"]}
+                            style={styles.signIn}
+                        >
+                            <Text style={[styles.textSign, { color: "#fff" }]} onPress={() => handleSubmit()} >Sign In</Text>
 
-                        style={[styles.signIn, { borderColor: "#009387", borderWidth: 1, marginTop: 15 }]}
-                    >
-                        <Text style={[styles.textSign, { color: "#009387" }]}
-                            onPress={() => navigation.navigate("RegisterAs")}>Sign Up</Text>
-                    </TouchableOpacity>
+                        </LinearGradient>
 
-                </View>
+                        <TouchableOpacity
 
+                            style={[styles.signIn, { borderColor: "#009387", borderWidth: 1, marginTop: 15 }]}
+                        >
+                            <Text style={[styles.textSign, { color: "#009387" }]}
+                                onPress={() => navigation.navigate("RegisterAs")}>Sign Up</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </ScrollView>
             </Animateable.View>
         </ImageBackground>
     )
@@ -171,7 +174,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
-        paddingVertical: 30,
+        paddingVertical: 18,
 
     },
     textHeader: {

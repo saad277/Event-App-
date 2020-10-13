@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, ScrollView } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -8,16 +8,47 @@ import * as Animateable from 'react-native-animatable'
 
 import { connect } from 'react-redux'
 import { userSignUp } from '../../../Redux/Actions/Auth/AuthActions'
+import AwesomeAlert from 'react-native-awesome-alerts';
+
 
 const UserSignUp = ({ navigation, userSignUp }) => {
 
 
-    const [name, setName] = useState("saad3")
-    const [email, setEmail] = useState("saad3@gmail.com")
+    const [name, setName] = useState("saad")
+    const [email, setEmail] = useState("saad9@gmail.com")
     const [password, setPassword] = useState("123")
 
     const [errors, setError] = useState([])
 
+
+
+    const [alert, setAlert] = useState(false)
+
+    const [alertText, setText] = useState("")
+
+    const [alertHeader, setHeader] = useState("")
+
+
+    const hideAlert = () => {
+
+
+        setAlert(false)
+    };
+
+    const showAlert = () => {
+
+
+        setAlert(true)
+    };
+
+    const settingAlert = (text, header) => {
+
+
+        setText(text)
+        setHeader(header)
+        showAlert()
+
+    }
 
     const verifyPassword = (term) => {
 
@@ -78,7 +109,11 @@ const UserSignUp = ({ navigation, userSignUp }) => {
 
 
 
-            userSignUp(name, email, password)
+            userSignUp(name, email, password, settingAlert)
+
+            setName("")
+            setEmail("")
+            setPassword("")
         }
         else {
 
@@ -98,63 +133,88 @@ const UserSignUp = ({ navigation, userSignUp }) => {
         <ImageBackground
             source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}
             style={styles.container}>
+
+
+            <AwesomeAlert
+                show={alert}
+
+                title={alertHeader}
+                message={alertText}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+
+                showConfirmButton={true}
+
+                confirmText="Okay"
+                confirmButtonColor="#009387"
+
+                onConfirmPressed={() => {
+                    hideAlert();
+                }}
+
+            />
+
+
             <View style={styles.header}>
                 <Text style={styles.headerText}>User Sign Up</Text>
             </View>
 
             <Animateable.View style={styles.formContainer} animation="fadeInUpBig">
 
-                <Text style={styles.textFooter}>Name</Text>
+                <ScrollView>
+                    <Text style={styles.textFooter}>Name</Text>
 
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="user"
-                        color="#05375a"
-                        size={20}
-                    />
-                    <TextInput placeholder="Enter Name" value={name} onChangeText={(text) => setName(text)} style={styles.textInput} autoCapitalize="none" />
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="user"
+                            color="#05375a"
+                            size={20}
+                        />
+                        <TextInput placeholder="User Name" value={name} onChangeText={(text) => setName(text)} style={styles.textInput} autoCapitalize="none" />
 
-                </View>
+                    </View>
 
-                <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
+                    <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
 
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="envelope"
-                        color="#05375a"
-                        size={20}
-                    />
-                    <TextInput placeholder="Enter Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.textInput} autoCapitalize="none" />
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="envelope"
+                            color="#05375a"
+                            size={20}
+                        />
+                        <TextInput placeholder="Enter Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.textInput} autoCapitalize="none" />
 
-                </View>
+                    </View>
 
-                <Text style={[styles.textFooter, { marginTop: 30 }]}>Password</Text>
+                    <Text style={[styles.textFooter, { marginTop: 30 }]}>Password</Text>
 
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="lock"
-                        color="#05375a"
-                        size={22}
-                    />
-                    <TextInput placeholder="Enter Password" value={password} onChangeText={(text) => setPassword(text)} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="lock"
+                            color="#05375a"
+                            size={22}
+                        />
+                        <TextInput placeholder="Enter Password" value={password} onChangeText={(text) => setPassword(text)} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
 
-                </View>
+                    </View>
 
-                <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
-
-
-                <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-                    <LinearGradient
-                        colors={["#08d4c4", "#01ab9d"]}
-                        style={styles.signIn}
-                    >
-                        <Text style={[styles.textSign, { color: "#fff" }]}>Sign Up</Text>
-
-                    </LinearGradient>
+                    <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
 
 
+                    <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+                        <LinearGradient
+                            colors={["#08d4c4", "#01ab9d"]}
+                            style={styles.signIn}
+                        >
+                            <Text style={[styles.textSign, { color: "#fff" }]}>Sign Up</Text>
 
-                </TouchableOpacity>
+                        </LinearGradient>
+
+
+
+                    </TouchableOpacity>
+
+                </ScrollView>
             </Animateable.View>
 
         </ImageBackground>
@@ -238,7 +298,7 @@ const dispatchToProps = (dispatch) => {
 
     return {
 
-        userSignUp: (name, email, password) => dispatch(userSignUp(name, email, password))
+        userSignUp: (name, email, password, alert) => dispatch(userSignUp(name, email, password, alert))
 
     }
 

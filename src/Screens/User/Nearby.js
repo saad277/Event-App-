@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, Image, Dimensions, Platform, Alert } from 'react-native'
 
 
 
@@ -60,7 +60,7 @@ const Nearby = ({ fetchNearby, nearby }) => {
                     longitude: initialPosition.longitude
                 })
             },
-            (error) => Alert.alert(error.message),
+            (error) => Alert.alert("Enable Location & Restart App"),
 
             { enableHighAccuracy: true, timeout: 90000, maximumAge: 1000 }
         );

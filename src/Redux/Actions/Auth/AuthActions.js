@@ -110,7 +110,7 @@ export const logOut = () => {
 
 
 
-export const userSignUp = (name, email, password) => {
+export const userSignUp = (name, email, password, alert) => {
 
 
     return (dispatch) => {
@@ -134,6 +134,16 @@ export const userSignUp = (name, email, password) => {
             .then((response) => {
 
                 console.log(response)
+
+                if (response.error) {
+
+                    alert(response.error, "Error")
+                }
+
+                if (response.success) {
+
+                    alert(response.success, "Success")
+                }
             })
 
 
@@ -150,7 +160,7 @@ export const userSignUp = (name, email, password) => {
 
 
 
-export const plannerSignUp = (name, email, password, organization) => {
+export const plannerSignUp = (name, email, password, organization, alert) => {
 
 
     return (dispatch) => {
@@ -175,6 +185,19 @@ export const plannerSignUp = (name, email, password, organization) => {
             .then((response) => {
 
                 console.log(response)
+
+
+                if (response.error) {
+
+                    alert(response.error, "Error")
+                }
+
+                if (response.success) {
+
+                    alert(response.success, "Success")
+                }
+
+
             })
 
 

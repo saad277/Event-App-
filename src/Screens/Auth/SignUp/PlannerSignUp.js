@@ -10,19 +10,47 @@ import * as Animateable from 'react-native-animatable'
 import { connect } from 'react-redux'
 
 import { plannerSignUp } from '../../../Redux/Actions/Auth/AuthActions'
-
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const PlannerSignUp = ({ navigation, plannerSignUp }) => {
 
 
-    const [name, setName] = useState("saad5")
-    const [email, setEmail] = useState("saad5@gmail.com")
+    const [name, setName] = useState("saad8")
+    const [email, setEmail] = useState("saad8@gmail.com")
     const [organization, setOrg] = useState("home")
     const [password, setPassword] = useState("123")
 
     const [errors, setError] = useState([])
 
 
+    const [alert, setAlert] = useState(false)
+
+    const [alertText, setText] = useState("")
+
+    const [alertHeader, setHeader] = useState("")
+
+
+    const hideAlert = () => {
+
+
+        setAlert(false)
+    };
+
+    const showAlert = () => {
+
+
+        setAlert(true)
+    };
+
+
+    const settingAlert = (text, header) => {
+
+
+        setText(text)
+        setHeader(header)
+        showAlert()
+
+    }
 
     const verifyName = (term) => {
 
@@ -106,7 +134,13 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
 
 
 
-            plannerSignUp(name, email, password, organization)
+            plannerSignUp(name, email, password, organization, settingAlert)
+
+            setName("")
+            setEmail("")
+            setOrg("")
+            setPassword("")
+            setError([])
         }
         else {
 
@@ -124,6 +158,23 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
             source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}
             style={styles.container}>
 
+            <AwesomeAlert
+                show={alert}
+
+                title={alertHeader}
+                message={alertText}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+
+                showConfirmButton={true}
+            
+                confirmText="Okay"
+                confirmButtonColor="#009387"
+
+                onConfirmPressed={() => {
+                    hideAlert();
+                }}
+            />
 
             <View style={styles.header}>
                 <Text style={styles.headerText}>Planner Sign Up</Text>
@@ -132,69 +183,73 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
             <Animateable.View style={styles.formContainer} animation="fadeInUpBig">
 
 
-                <Text style={styles.textFooter}>Name</Text>
+                <ScrollView>
 
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="user"
-                        color="#05375a"
-                        size={20}
-                    />
-                    <TextInput placeholder="Enter Email" value={name} onChangeText={(text) => setName(text)} style={styles.textInput} autoCapitalize="none" />
+                    <Text style={styles.textFooter}>User Name</Text>
 
-                </View>
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="user"
+                            color="#05375a"
+                            size={20}
+                        />
+                        <TextInput placeholder="User Name" value={name} onChangeText={(text) => setName(text)} style={styles.textInput} autoCapitalize="none" />
 
-                <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
+                    </View>
 
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="envelope"
-                        color="#05375a"
-                        size={20}
-                    />
-                    <TextInput placeholder="Enter Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.textInput} autoCapitalize="none" />
+                    <Text style={[styles.textFooter, { marginTop: 30 }]}>Email</Text>
 
-                </View>
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="envelope"
+                            color="#05375a"
+                            size={20}
+                        />
+                        <TextInput placeholder="Enter Email" value={email} onChangeText={(text) => setEmail(text)} style={styles.textInput} autoCapitalize="none" />
 
-
-                <Text style={[styles.textFooter, { marginTop: 30 }]}>Organization </Text>
-
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="industry"
-                        color="#05375a"
-                        size={20}
-                    />
-                    <TextInput placeholder="Organization Name" value={organization} onChangeText={(text) => setOrg(text)} style={styles.textInput} autoCapitalize="none"  />
-
-                </View>
-                <Text style={[styles.textFooter, { marginTop: 30 }]}>Password</Text>
-
-                <View style={styles.action}>
-                    <FontAwesome
-                        name="lock"
-                        color="#05375a"
-                        size={22}
-                    />
-                    <TextInput placeholder="Enter Password" value={password} onChangeText={(text) => setPassword(text)} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
-
-                </View>
+                    </View>
 
 
-                <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
+                    <Text style={[styles.textFooter, { marginTop: 30 }]}>Organization </Text>
 
-                <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-                    <LinearGradient
-                        colors={["#08d4c4", "#01ab9d"]}
-                        style={styles.signIn}
-                    >
-                        <Text style={[styles.textSign, { color: "#fff" }]}>Sign Up</Text>
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="industry"
+                            color="#05375a"
+                            size={20}
+                        />
+                        <TextInput placeholder="Organization Name" value={organization} onChangeText={(text) => setOrg(text)} style={styles.textInput} autoCapitalize="none" />
 
-                    </LinearGradient>
+                    </View>
+                    <Text style={[styles.textFooter, { marginTop: 30 }]}>Password</Text>
+
+                    <View style={styles.action}>
+                        <FontAwesome
+                            name="lock"
+                            color="#05375a"
+                            size={22}
+                        />
+                        <TextInput placeholder="Enter Password" value={password} onChangeText={(text) => setPassword(text)} style={styles.textInput} autoCapitalize="none" secureTextEntry={true} />
+
+                    </View>
+
+
+                    <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
+
+                    <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+                        <LinearGradient
+                            colors={["#08d4c4", "#01ab9d"]}
+                            style={styles.signIn}
+                        >
+                            <Text style={[styles.textSign, { color: "#fff" }]}>Sign Up</Text>
+
+                        </LinearGradient>
 
 
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
+
+                </ScrollView>
 
             </Animateable.View>
 
@@ -281,7 +336,7 @@ const dispatchState = (dispatch) => {
 
     return {
 
-        plannerSignUp: (name, email, password, organization) => dispatch(plannerSignUp(name, email, password, organization))
+        plannerSignUp: (name, email, password, organization, alert) => dispatch(plannerSignUp(name, email, password, organization, alert))
     }
 
 }
