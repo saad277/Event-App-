@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { View, Text, SafeAreaView, TextInput, StyleSheet, Platform, StatusBar, ScrollView, Image, Dimensions } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 
 
@@ -9,19 +10,21 @@ import { View, Text, SafeAreaView, TextInput, StyleSheet, Platform, StatusBar, S
 
 
 
-const MoreItems = ({ picture}) => {
+const MoreItems = ({ item, navigation }) => {
     const { width, height } = Dimensions.get("window")
 
     return (
 
-        <View style={{ width: width - 40, height: 200, marginTop: 20, marginRight: 20, backgroundColor: "white" }} >
-            <Image
-                source={{ uri: picture }}
-                style={{ flex: 1, height: null, width: null, resizeMode: "cover", borderRadius: 5, borderWidth: 1 }}
-            />
+        <TouchableOpacity onPress={() => navigation.navigate("EventDetailsUser", { item })}>
+            <View style={{ width: width - 40, height: 200, marginTop: 20, marginRight: 20, backgroundColor: "white" }} >
+                <Image
+                    source={{ uri: item.picture }}
+                    style={{ flex: 1, height: null, width: null, resizeMode: "cover", borderRadius: 5, borderWidth: 1 }}
+                />
 
 
-        </View>
+            </View>
+        </TouchableOpacity>
 
 
     )

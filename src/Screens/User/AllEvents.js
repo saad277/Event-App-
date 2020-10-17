@@ -12,7 +12,7 @@ import { ListItem, Avatar } from 'react-native-elements'
 
 import { fetchAllEvents } from '../../Redux/Actions/Events/EventActions'
 
-const AllEvents = ({ fetchAllEvents, all }) => {
+const AllEvents = ({ fetchAllEvents, all, navigation }) => {
 
 
 
@@ -45,14 +45,18 @@ const AllEvents = ({ fetchAllEvents, all }) => {
 
                     return (
 
-                        <ListItem bottomDivider >
+
+                        <ListItem bottomDivider onPress={() => navigation.navigate("EventDetailsUser", { item: x })} >
+
                             <Avatar size="medium" rounded source={{ uri: x.picture }} />
-                            <ListItem.Content style={{borderColor:"#009387"}}>
-                                <ListItem.Title style={{textTransform:"capitalize",fontWeight:"bold"}}>{x.name}</ListItem.Title>
+                            <ListItem.Content style={{ borderColor: "#009387" }}>
+                                <ListItem.Title style={{ textTransform: "capitalize", fontWeight: "bold" }}>{x.name}</ListItem.Title>
                                 <ListItem.Subtitle>{x.city}</ListItem.Subtitle>
                             </ListItem.Content>
                             <ListItem.Chevron />
+
                         </ListItem>
+
 
 
                     )

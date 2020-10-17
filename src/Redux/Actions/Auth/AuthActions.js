@@ -9,7 +9,7 @@ import { baseUrl } from '../../../BaseUrl/baseUrl'
 
 
 
-export const signIn = (email, password, navigation) => {
+export const signIn = (email, password, navigation,alert) => {
 
     console.log(email, password)
 
@@ -35,6 +35,13 @@ export const signIn = (email, password, navigation) => {
             .then(async (response) => {
 
                 console.log(response)
+
+                if (response.error) {
+
+                    alert(response.error, "Error")
+                }
+
+              
 
 
                 if (response.user) {

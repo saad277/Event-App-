@@ -8,6 +8,7 @@ import Nearby from '../Screens/User/Nearby'
 import Upcoming from '../Screens/User/Upcoming'
 import Settings from '../Screens/User/Settings'
 import AllEvents from '../Screens/User/AllEvents'
+import EventDetails from '../Screens/User/EventDetails'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -38,6 +39,43 @@ const HomeStack = createStackNavigator({
             }
 
         }
+    },
+
+    EventDetailsUser: {
+
+        screen: EventDetails,
+        navigationOptions: () => {
+
+            return {
+
+                title: "Event Details",
+                headerShown: false,
+            }
+        }
+    }
+
+
+})
+
+
+
+const NearbyStack = createStackNavigator({
+
+    Nearby: {
+        screen: Nearby,
+
+    },
+    EventDetailsUser: {
+
+        screen: EventDetails,
+        navigationOptions: () => {
+
+            return {
+
+                title: "Event Details",
+                headerShown: false,
+            }
+        }
     }
 
 
@@ -64,7 +102,7 @@ const UserTabNavigator = createBottomTabNavigator({
         }
     },
     Nearby: {
-        screen: Nearby,
+        screen: NearbyStack,
         navigationOptions: () => {
 
             return {
@@ -77,6 +115,7 @@ const UserTabNavigator = createBottomTabNavigator({
             }
 
         }
+
     },
     Upcoming: {
         screen: Upcoming,

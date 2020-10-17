@@ -16,9 +16,10 @@ import { connect } from 'react-redux'
 import { fetchNearby } from '../../Redux/Actions/Events/EventActions'
 
 import Carousel from 'react-native-snap-carousel';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const Nearby = ({ fetchNearby, nearby }) => {
+const Nearby = ({ fetchNearby, nearby, navigation }) => {
 
 
     const mapRef = useRef(null)
@@ -107,10 +108,12 @@ const Nearby = ({ fetchNearby, nearby }) => {
     }, [])
 
     const renderCarouselItem = ({ item }) =>
-        <View style={styles.cardContainer}>
-            <Text style={styles.cardTitle}>{item.name}</Text>
-            <Image style={styles.cardImage} source={{ uri: item.picture }} />
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate("EventDetailsUser", { item })}>
+            <View style={styles.cardContainer}>
+                <Text style={styles.cardTitle}>{item.name}</Text>
+                <Image style={styles.cardImage} source={{ uri: item.picture }} />
+            </View>
+        </TouchableOpacity>
 
 
 

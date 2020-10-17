@@ -9,7 +9,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import { signIn } from '../../../Redux/Actions/Auth/AuthActions'
 
-
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 const Login = ({ navigation, signIn, }) => {
 
@@ -20,6 +20,38 @@ const Login = ({ navigation, signIn, }) => {
     const [password, setPassword] = useState("123")
 
     const [errors, setError] = useState([])
+
+
+
+    const [alert, setAlert] = useState(false)
+
+    const [alertText, setText] = useState("")
+
+    const [alertHeader, setHeader] = useState("")
+
+
+
+    const hideAlert = () => {
+
+
+        setAlert(false)
+    };
+
+    const showAlert = () => {
+
+
+        setAlert(true)
+    };
+
+
+    const settingAlert = (text, header) => {
+
+
+        setText(text)
+        setHeader(header)
+        showAlert()
+
+    }
 
     const verifyPassword = (term) => {
 
@@ -59,7 +91,7 @@ const Login = ({ navigation, signIn, }) => {
         if (validateEmail && validatePassword) {
 
 
-            signIn(email, password, navigation)
+            signIn(email, password, navigation, settingAlert)
 
             setEmail("")
             setPassword("")
@@ -84,6 +116,27 @@ const Login = ({ navigation, signIn, }) => {
             style={styles.container}
             source={{ uri: "https://images.unsplash.com/photo-1513546493312-0066d7de3fd2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=319&q=80" }}>
             <StatusBar backgroundColor="#009387" />
+
+            <AwesomeAlert
+                show={alert}
+
+                title={alertHeader}
+                message={alertText}
+                closeOnTouchOutside={true}
+                closeOnHardwareBackPress={false}
+
+                showConfirmButton={true}
+
+                confirmText="Okay"
+                confirmButtonColor="#009387"
+
+                onConfirmPressed={() => {
+                    hideAlert();
+                }}
+
+            />
+
+
             <View style={styles.header}>
                 <Text style={styles.textHeader}>Welcome !</Text>
             </View>
@@ -237,7 +290,7 @@ const dispatchStateToProps = (dispatch) => {
 
 
     return {
-        signIn: (email, password, navigation) => dispatch(signIn(email, password, navigation)),
+        signIn: (email, password, navigation,alert) => dispatch(signIn(email, password, navigation,alert)),
 
     }
 

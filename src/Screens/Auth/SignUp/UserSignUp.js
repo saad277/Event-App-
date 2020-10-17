@@ -8,6 +8,7 @@ import * as Animateable from 'react-native-animatable'
 
 import { connect } from 'react-redux'
 import { userSignUp } from '../../../Redux/Actions/Auth/AuthActions'
+
 import AwesomeAlert from 'react-native-awesome-alerts';
 
 

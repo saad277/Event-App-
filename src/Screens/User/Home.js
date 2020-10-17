@@ -64,7 +64,7 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
 
                         {firstHalf.map((x, i) => {
 
-                            return <FeaturedItem name={x.name} picture={x.picture} key={i} />
+                            return <FeaturedItem item={x} key={i} navigation={navigation} />
                         })}
 
 
@@ -104,7 +104,7 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
 
                         {secondHalf.map((x, i) => {
 
-                            return <MoreItems key={i} picture={x.picture} />
+                            return <MoreItems key={i} item={x} navigation={navigation} />
                         })}
                     </ScrollView>
 

@@ -1,3 +1,7 @@
+
+
+
+
 import React, { useState, useEffect } from 'react'
 
 import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList, TouchableOpacity, Image } from 'react-native'
@@ -7,26 +11,25 @@ import Material from 'react-native-vector-icons/MaterialIcons'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
-import { Tile } from 'react-native-elements';
+import { Tile, Button } from 'react-native-elements';
 
-import { Container, Header, Content, Button, Icon, Item, Accordion } from 'native-base';
-
+import { Container, Header, Content, Icon, Item, Accordion } from 'native-base';
 
 
 import moment from "moment";
 
 const EventDetails = ({ navigation }) => {
 
-    const item = navigation.getParam("item")
 
-    console.log(item)
+    let param = navigation.getParam("item")
 
+    console.log(param)
 
     return (
         <ScrollView style={styles.container}>
-            {/* <Image source={{ uri: item.picture }} style={styles.image} /> */}
+
             <Tile
-                imageSrc={{ uri: item.picture }}
+                imageSrc={{ uri: param.picture }}
                 // title={item.name}
                 featured
             //caption="Some Caption Text"
@@ -38,49 +41,64 @@ const EventDetails = ({ navigation }) => {
 
                     <View style={{ flexDirection: "column", flex: 1 }}>
 
-                        <Text style={styles.header}>{item.name}</Text>
-                        <Text style={styles.sub}>{item.type}</Text>
+                        <Text style={styles.header}>{param.name}</Text>
+                        <Text style={styles.sub}>{param.type}</Text>
 
                     </View>
 
                     <View style={styles.iconContainer} >
-                        <Material size={40} color={"#009387"} name={"favorite"} style={{ marginRight: 20, marginTop: 20 }} />
+                        <Button
+                            buttonStyle={{ backgroundColor: "#009387" }}
+                            containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 10 }}
+
+                            style={{ color: "#009387" }}
+                            icon={
+                                <FontAwesome
+                                    name="plus-circle"
+                                    size={15}
+                                    color="white"
+                                    style={{ marginRight: 10 }}
+                                />
+                            }
+                            title="Join"
+                        />
                     </View>
 
 
                 </View>
 
-                <View style={{ flexDirection: "row", marginHorizontal: 15, marginTop: 30 }}>
+                <View style={[styles.rowContainer, { marginTop: 20 }]}>
 
-                    <Text style={[styles.header, { fontWeight: "900", flex: 1, marginLeft: 20 }]}>$ {item.price}</Text>
 
-                    <View style={{ justifyContent: "flex-end", backgroundColor: "red" }}>
+                    <View style={{ flexDirection: "column", flex: 1, }}>
+                        <Text style={styles.label}>Capacity </Text>
+                        <Text style={styles.text}>{param.capacity}</Text>
+                    </View>
 
-                        <Button iconLeft primary success style={{ justifyContent: "center", paddingHorizontal: 10, color: "#009387" }}>
-                            <Icon name='people' />
-                            <Text style={{ marginLeft: 10, fontSize: 16 }}>{item.members.length}</Text>
-                        </Button>
-
+                    <View style={{ flexDirection: "column", justifyContent: "flex-end", flex: 1 }}>
+                        <Text style={styles.label}>Ticket</Text>
+                        <Text style={styles.text}>{param.price} $</Text>
                     </View>
 
 
-                </View >
+                </View>
 
                 <View style={[styles.rowContainer, { marginTop: 20 }]}>
 
 
                     <View style={{ flexDirection: "column", flex: 1, }}>
                         <Text style={styles.label}>City</Text>
-                        <Text style={styles.text}>{item.city}</Text>
+                        <Text style={styles.text}>{param.city}</Text>
                     </View>
 
                     <View style={{ flexDirection: "column", justifyContent: "flex-end", flex: 1 }}>
                         <Text style={styles.label}>Country</Text>
-                        <Text style={styles.text}>{item.country}</Text>
+                        <Text style={styles.text}>{param.country}</Text>
                     </View>
 
 
                 </View>
+
 
 
                 <View style={[styles.rowContainer, { marginTop: 20, borderBottomColor: "white", borderBottomWidth: 0, }]}>
@@ -88,14 +106,14 @@ const EventDetails = ({ navigation }) => {
 
                     <View style={{ flexDirection: "column", flex: 1, }}>
                         <Text style={styles.label}>From</Text>
-                        <Text style={styles.text}>{item.fromDate.slice(0, 10)}</Text>
+                        <Text style={styles.text}>{param.fromDate.slice(0, 10)}</Text>
                     </View >
 
 
 
                     <View style={{ flexDirection: "column", justifyContent: "flex-end", flex: 1, marginLeft: 20 }}>
                         <Text style={styles.label}>To</Text>
-                        <Text style={styles.text}>{item.toDate.slice(0, 10)}</Text>
+                        <Text style={styles.text}>{param.toDate.slice(0, 10)}</Text>
                     </View>
 
                     <View style={{ flexDirection: "column", }}>
@@ -104,12 +122,15 @@ const EventDetails = ({ navigation }) => {
 
                 </View>
 
+
+
+
                 <View style={[styles.rowContainer, { marginTop: 20, }]}>
 
 
                     <View style={{ flexDirection: "column", flex: 1, }}>
                         <Text style={styles.label}>From</Text>
-                        <Text style={styles.text}>{moment(param.toDate).format('LT')}</Text>
+                        <Text style={styles.text}>{moment(param.fromDate).format('LT')}</Text>
                     </View >
 
 
@@ -125,11 +146,12 @@ const EventDetails = ({ navigation }) => {
 
                 </View>
 
+
                 <View style={[styles.rowContainer,]}>
 
                     <Content style={{ marginVertical: 20 }} >
                         <Accordion
-                            dataArray={[{ title: "Description", content: item.description }]}
+                            dataArray={[{ title: "Description", content: param.description }]}
                             expandedIcon="remove"
                             expanded={1}
                             iconStyle={{ color: "#009387" }}
@@ -143,14 +165,18 @@ const EventDetails = ({ navigation }) => {
                 </View>
 
 
+
             </View>
 
-        </ScrollView >
+
+        </ScrollView>
     )
 
 
-
 }
+
+
+
 
 const styles = StyleSheet.create({
 
@@ -216,6 +242,10 @@ const styles = StyleSheet.create({
 
 
 })
+
+
+
+
 
 
 export default EventDetails;
