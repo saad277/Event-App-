@@ -18,12 +18,17 @@ import { Container, Header, Content, Icon, Item, Accordion } from 'native-base';
 
 import moment from "moment";
 
+import Modal from './Modal/modal'
+
 const EventDetails = ({ navigation }) => {
 
 
     let param = navigation.getParam("item")
 
     console.log(param)
+
+
+    const [toggleModal, setModal] = useState(true)
 
     return (
         <ScrollView style={styles.container}>
@@ -34,6 +39,9 @@ const EventDetails = ({ navigation }) => {
                 featured
             //caption="Some Caption Text"
             />
+
+            <Modal toggleModal={toggleModal} />
+
 
             <View style={styles.secondContainer}>
 

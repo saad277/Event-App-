@@ -197,6 +197,7 @@ dependencies {
      implementation project(':react-native-maps')
      implementation project(':react-native-community-geolocation')
      implementation project(':react-native-permissions')
+     implementation project(':react-native-fs')
 
 
       implementation 'com.android.support:multidex:2.0.1'

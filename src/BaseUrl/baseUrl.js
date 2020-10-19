@@ -1,7 +1,14 @@
 
 
 
-
+//for Emulator 
 //export const baseUrl="http://10.0.2.2:4000/"
 
-export const baseUrl="https://event-app-back.herokuapp.com/"
+
+//for Phone 
+export const baseUrl="http://192.168.0.105:4000/"
+
+
+
+//for Deployed
+//export const baseUrl="https://event-app-back.herokuapp.com/"

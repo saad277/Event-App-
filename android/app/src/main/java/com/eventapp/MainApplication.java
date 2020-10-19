@@ -18,6 +18,7 @@ import com.reactcommunity.rndatetimepicker.RNDateTimePickerPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
+import com.rnfs.RNFSPackage;  // <--- import
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
           new LinearGradientPackage();
           new MapsPackage();
           new GeolocationPackage();
+          new RNFSPackage();
           packages.add(new LottiePackage());
           
         
