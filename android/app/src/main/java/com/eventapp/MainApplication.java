@@ -20,6 +20,7 @@ import com.reactnativecommunity.geolocation.GeolocationPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.rnfs.RNFSPackage;  // <--- import
 
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MapsPackage();
           new GeolocationPackage();
           new RNFSPackage();
+         
           packages.add(new LottiePackage());
           
         
