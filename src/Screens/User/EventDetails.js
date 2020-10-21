@@ -40,7 +40,15 @@ const EventDetails = ({ navigation }) => {
             //caption="Some Caption Text"
             />
 
-            <Modal toggleModal={toggleModal} />
+            <Modal
+                toggleModal={toggleModal}
+                name={param.name}
+                fromDate={param.fromDate}
+                toDate={param.toDate}
+                city={param.city}
+                country={param.country}
+                ticket={param.price}
+            />
 
 
             <View style={styles.secondContainer}>
