@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList, TouchableOpacity, Image,Platform, PermissionsAndroid } from 'react-native'
+import { View, Text, StyleSheet, LogBox, ScrollView, RefreshControl, FlatList, TouchableOpacity, Image, Platform, PermissionsAndroid } from 'react-native'
 
 import Modal from 'react-native-modal';
 
@@ -14,7 +14,12 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 import { Tile, Button } from 'react-native-elements';
 import moment from "moment";
 
-const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket }) => {
+
+import RNFetchBlob from 'rn-fetch-blob'
+
+LogBox.ignoreLogs(['Warning: ...']);
+
+const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket, closeModal }) => {
 
 
     const getPermissions = async () => {
@@ -42,11 +47,53 @@ const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket }) => {
 
     useEffect(() => {
 
-        getPermissions()
+        getPermissions();
 
     }, [])
 
 
+
+
+    const getImage = async () => {
+
+
+        let docsDir;
+        if (Platform.OS == "android") {
+            docsDir = await RNFS.ExternalStorageDirectoryPath //RNFS.DocumentDirectoryPath;
+        } else {
+            docsDir = await PDFLib.getDocumentsDirectory();
+        }
+
+        console.log(docsDir)
+
+        let path = `${docsDir}/logo.png`;
+
+        const url = "https://firebasestorage.googleapis.com/v0/b/electrical-4ce27.appspot.com/o/event_logo-0.png?alt=media&token=f3fd502a-91a9-4425-8584-c000fca20253"
+
+        await RNFetchBlob.fetch('GET', url, {   // image is downloaded in base64
+
+        }).then((response) => {
+
+            //  console.log(response)
+
+            let base64Str = response.base64()
+
+            // console.log(base64Str)
+
+            RNFS.writeFile(path, base64Str, "base64")
+                .then((success) => {
+
+                    console.log("image stored")
+
+                    createPdf();
+
+
+                }).catch((error) => console.log(error))
+
+        }).catch((error) => console.log(error))
+
+
+    }
 
 
     const createPdf = async () => {
@@ -67,13 +114,91 @@ const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket }) => {
         const pdfPath = `${docsDir}/sample.pdf`;
         docsDir = Platform.OS === 'android' ? `/${docsDir}` : docsDir; // for ios 
 
+        const image = `${docsDir}/logo.png`;
+
+
 
         const page1 = PDFPage
             .create()
-            .drawText('You can add text and rectangles to the PDF!', {
-                x: 5,
-                y: 235,
-                fontSize: 10
+            .drawImage(
+                image,
+                'png',
+                {
+                    x: 77,
+                    y: 389,
+                    width: 100,
+                    height: 100,
+
+                }
+            )
+            .drawText('Recipient ID :', {
+                x: 10,
+                y: 360,
+                fontSize: 13,
+                color: "#009387",
+
+            })
+            .drawText('800000002212', {
+                x: 87,
+                y: 360,
+                fontSize: 11,
+                color: "#000000",
+
+            })
+            .drawText('Event Name :', {
+                x: 10,
+                y: 340,
+                fontSize: 13,
+                color: "#009387",
+
+
+            })
+            .drawText('Hello World', {
+                x: 87,
+                y: 340,
+                fontSize: 11,
+                color: "#000000",
+
+            })
+            .drawText('User Name :', {
+                x: 10,
+                y: 320,
+                fontSize: 13,
+                color: "#009387",
+
+            })
+            .drawText('Saad ', {
+                x: 87,
+                y: 320,
+                fontSize: 11,
+                color: "#000000",
+
+            })
+            .drawText('Event Date :', {
+                x: 10,
+                y: 300,
+                fontSize: 13,
+                color: "#009387",
+
+            })
+            .drawText('11-Nov-2020 ', {
+                x: 87,
+                y: 300,
+                fontSize: 11,
+                color: "#000000",
+
+            })
+            .drawText('Timing :', {
+                x: 10,
+                y: 280,
+                fontSize: 13,
+                color: "#009387",
+
+            }).drawText('5:45 pm ', {
+                x: 87,
+                y: 280,
+                fontSize: 11,
+                color: "#000000",
 
             })
 
@@ -87,14 +212,21 @@ const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket }) => {
                 // Do stuff with your shiny new PDF!
             });
 
+        RNFetchBlob.fs.unlink(image)            //deleting the image
+            .then(() => {
 
+                console.log("deleted")
 
-
+            })
+            .catch((err) => console.log(err))
 
 
     }
+
+
+
     return (
-        <Modal isVisible={toggleModal}>
+        <Modal isVisible={toggleModal} onBackButtonPress={() => closeModal()}>
             <View style={{ flex: 1, backgroundColor: "white" }}>
                 <Image source={require("../../../Assets/event_logo-0.png")} style={styles.image} />
                 <Text style={styles.header}>{name}</Text>
@@ -163,6 +295,22 @@ const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket }) => {
 
                 <View style={styles.iconContainer} >
                     <Button
+                        buttonStyle={{ backgroundColor: "red" }}
+                        containerStyle={{ color: "red", paddingHorizontal: 20, marginTop: 10 }}
+
+                        style={{ color: "#009387" }}
+                        icon={
+                            <FontAwesome
+                                name="minus-circle"
+                                size={15}
+                                color="white"
+                                style={{ marginRight: 10 }}
+                            />
+                        }
+                        title="CANCEL"
+                        onPress={() => closeModal()}
+                    />
+                    <Button
                         buttonStyle={{ backgroundColor: "#009387" }}
                         containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 10 }}
 
@@ -176,6 +324,7 @@ const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket }) => {
                             />
                         }
                         title="Confirm"
+                        onPress={() => getImage()}
                     />
                 </View>
 
@@ -225,6 +374,14 @@ const styles = StyleSheet.create({
 
         fontSize: 12,
         fontWeight: "700"
+    },
+    iconContainer: {
+
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 10
+
+
     },
 
 })

@@ -19,6 +19,7 @@ import com.airbnb.android.react.maps.MapsPackage;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.rnfs.RNFSPackage;  // <--- import
+import com.RNFetchBlob.RNFetchBlobPackage; 
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -41,6 +42,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MapsPackage();
           new GeolocationPackage();
           new RNFSPackage();
+          new RNFetchBlobPackage();
          
           packages.add(new LottiePackage());
           

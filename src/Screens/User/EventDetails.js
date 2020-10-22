@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, LogBox, RefreshControl, FlatList, TouchableOpacity, Image } from 'react-native'
 
 
 import Material from 'react-native-vector-icons/MaterialIcons'
@@ -15,6 +15,9 @@ import { Tile, Button } from 'react-native-elements';
 
 import { Container, Header, Content, Icon, Item, Accordion } from 'native-base';
 
+
+
+LogBox.ignoreLogs(['Warning: ...']);
 
 import moment from "moment";
 
@@ -30,6 +33,16 @@ const EventDetails = ({ navigation }) => {
 
     const [toggleModal, setModal] = useState(true)
 
+
+
+    const closeModal = () => {
+
+
+        setModal(false)
+
+    }
+
+
     return (
         <ScrollView style={styles.container}>
 
@@ -42,6 +55,7 @@ const EventDetails = ({ navigation }) => {
 
             <Modal
                 toggleModal={toggleModal}
+                closeModal={closeModal}
                 name={param.name}
                 fromDate={param.fromDate}
                 toDate={param.toDate}
@@ -77,6 +91,7 @@ const EventDetails = ({ navigation }) => {
                                 />
                             }
                             title="Join"
+                            onPress={() => setModal(true)}
                         />
                     </View>
 

@@ -193,8 +193,7 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-    implementation project(':react-native-vector-icons')
-
+     implementation project(':react-native-vector-icons')
      implementation project(':react-native-linear-gradient')
      implementation project(':lottie-react-native')
      implementation project(':@react-native-community_datetimepicker')
@@ -203,6 +202,7 @@ dependencies {
      implementation project(':react-native-permissions')
      implementation project(':react-native-fs')
      implementation project(':react-native-pdf-lib')
+     implementation project(':rn-fetch-blob')  
 
 
       implementation 'com.android.support:multidex:2.0.1'
