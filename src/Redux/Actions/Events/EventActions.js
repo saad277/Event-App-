@@ -1,6 +1,6 @@
 
 
-import { CREATE_EVENT, FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS, FETCH_NEARBY } from './ActionTypes'
+import { CREATE_EVENT, FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS, FETCH_NEARBY, JOIN_EVENT } from './ActionTypes'
 
 import { baseUrl } from '../../../BaseUrl/baseUrl'
 
@@ -254,7 +254,7 @@ export const fetchNearby = (latitude, longitude) => {
         }).then((res) => res.json())
             .then((response) => {
 
-                 console.log(response.result)
+                console.log(response.result)
 
 
                 dispatch({
@@ -266,6 +266,53 @@ export const fetchNearby = (latitude, longitude) => {
 
 
             }).catch((error) => console.log(error))
+
+    }
+
+
+}
+
+
+
+export const joinEvent = (eventId, eventName, userName, userId, joinedDate, ticketPrice) => {
+
+    return async (dispatch) => {
+
+        const token = await AsyncStorage.getItem("userToken")
+
+
+        console.log(eventId, eventName, userName, userId, joinedDate, ticketPrice)
+
+        fetch(baseUrl + "joinEvent", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
+            },
+            body: JSON.stringify({
+                "eventId": eventId,
+                "eventName": eventName,
+                "userName": userName,
+                "userId": userId,
+                "joinedDate": joinedDate,
+                "ticketPrice": ticketPrice
+
+            })
+
+        }).then((res) => res.json())
+            .then((response) => {
+
+                console.log(response)
+
+
+                dispatch({
+
+
+                    type: JOIN_EVENT,
+                    payload: response.event
+                })
+            })
+
 
     }
 

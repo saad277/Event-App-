@@ -17,10 +17,17 @@ import moment from "moment";
 
 import RNFetchBlob from 'rn-fetch-blob'
 
-LogBox.ignoreLogs(['Warning: ...']);
+LogBox.ignoreLogs(['Warning: ...'])
 
-const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket, closeModal }) => {
 
+import { connect } from 'react-redux'
+
+import { joinEvent } from '../../../Redux/Actions/Events/EventActions'
+
+const ModalPop = ({ toggleModal, id, name, fromDate, toDate, ticket, closeModal, user, joinEvent }) => {
+
+
+    console.log(user)
 
     const getPermissions = async () => {
 
@@ -52,6 +59,15 @@ const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket, closeModal }) =
     }, [])
 
 
+    //eventId, eventName, userName, userId, joinedDate, ticketPrice
+
+
+
+    const joinTheEvent = () => {
+
+        joinEvent(id, name, user["name"], user["_id"], fromDate, ticket)
+
+    }
 
 
     const getImage = async () => {
@@ -324,7 +340,7 @@ const ModalPop = ({ toggleModal, name, fromDate, toDate, ticket, closeModal }) =
                             />
                         }
                         title="Confirm"
-                        onPress={() => getImage()}
+                        onPress={() => joinTheEvent()}
                     />
                 </View>
 
@@ -387,4 +403,25 @@ const styles = StyleSheet.create({
 })
 
 
-export default ModalPop;
+const mapState = (state) => {
+
+
+    return {
+
+        user: state.auth
+    }
+
+}
+
+
+const dispatchState = (dispatch) => {
+
+
+    return {
+
+        joinEvent: (eventId, eventName, userName, userId, joinedDate, ticketPrice) => dispatch(joinEvent(eventId, eventName, userName, userId, joinedDate, ticketPrice))
+    }
+
+}
+
+export default connect(mapState, dispatchState)(ModalPop);

@@ -1,4 +1,4 @@
-import { FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS, FETCH_NEARBY } from '../Actions/Events/ActionTypes'
+import { FETCH_EVENTS, USER_FETCH_RANDOM_EVENTS, FETCH_ALL_EVENTS, FETCH_NEARBY, JOIN_EVENT } from '../Actions/Events/ActionTypes'
 
 import { LOG_OUT } from '../Actions/Auth/ActionTypes'
 
@@ -43,8 +43,11 @@ const eventReducer = (state = iState, action) => {
                 ...state,
                 nearby: action.payload
             }
+
+        case JOIN_EVENT:
+            console.log("joinnnnning")
         case LOG_OUT:
-            return{
+            return {
                 ...state,
                 random: [],
                 all: [],

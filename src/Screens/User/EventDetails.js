@@ -56,6 +56,7 @@ const EventDetails = ({ navigation }) => {
             <Modal
                 toggleModal={toggleModal}
                 closeModal={closeModal}
+                id={param._id}
                 name={param.name}
                 fromDate={param.fromDate}
                 toDate={param.toDate}
