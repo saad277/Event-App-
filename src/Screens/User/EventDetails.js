@@ -4,18 +4,20 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { View, Text, StyleSheet, ScrollView, LogBox, RefreshControl, FlatList, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, LogBox, PermissionsAndroid } from 'react-native'
 
 
-import Material from 'react-native-vector-icons/MaterialIcons'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
 
 import { Tile, Button } from 'react-native-elements';
 
-import { Container, Header, Content, Icon, Item, Accordion } from 'native-base';
+import { Content, Icon, Item, Accordion } from 'native-base';
 
 
+
+
+import { generateRecipient } from '../../Redux/Actions/Events/EventActions'
 
 LogBox.ignoreLogs(['Warning: ...']);
 
@@ -25,7 +27,7 @@ import Modal from './Modal/modal'
 
 import { connect } from 'react-redux'
 
-const EventDetails = ({ navigation, user, random, all, nearby, }) => {
+const EventDetails = ({ navigation, user, random, all, nearby, generateRecipient }) => {
 
 
     let param = navigation.getParam("item")
@@ -56,6 +58,28 @@ const EventDetails = ({ navigation, user, random, all, nearby, }) => {
         setJoined(true)
     }
 
+    const getPermissions = async () => {
+
+        if (Platform.OS == "android") {
+            try {
+                await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                    {
+                        title: 'Storage Permission',
+                        message:
+                            'Write storage permission need.',
+                        buttonNegative: 'Cancel',
+                        buttonPositive: 'OK',
+                    },
+                );
+            } catch (err) {
+                console.warn(err);
+            }
+        }
+
+
+
+    }
 
 
     useEffect(() => {
@@ -85,8 +109,55 @@ const EventDetails = ({ navigation, user, random, all, nearby, }) => {
 
         })
 
+        getPermissions()
+
     }, [all, random, nearby])
 
+
+
+    const renderButton = () => {
+
+        if (joined) {
+
+            return (<Button
+                buttonStyle={{ backgroundColor: "green" }}
+                containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 5 }}
+
+                style={{ color: "#009387" }}
+
+                title="Generate Recipient"
+                onPress={() => generateRecipient(param._id, user._id)}
+            />)
+        } else if (param.capacity == param.members.length) {
+
+            return (
+                <Text style={{ fontSize: 20, color: "red", marginRight: 10, marginTop: 8 }}>Sold Out</Text>
+            )
+        } else {
+
+            return (
+                <Button
+                    buttonStyle={{ backgroundColor: "#009387" }}
+                    containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 10 }}
+
+                    style={{ color: "#009387" }}
+                    icon={
+                        <FontAwesome
+                            name="plus-circle"
+                            size={15}
+                            color="white"
+                            style={{ marginRight: 10 }}
+                        />
+                    }
+                    title="Join"
+                    onPress={() => setModal(true)}
+                />
+            )
+        }
+
+
+
+    }
 
     return (
         <ScrollView style={styles.container}>
@@ -126,30 +197,7 @@ const EventDetails = ({ navigation, user, random, all, nearby, }) => {
                     <View style={styles.iconContainer} >
 
 
-                        {joined ? <Button
-                            buttonStyle={{ backgroundColor: "green" }}
-                            containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 5 }}
-
-                            style={{ color: "#009387" }}
-
-                            title="Generate Recipient"
-                            onPress={() => { }}
-                        /> : <Button
-                                buttonStyle={{ backgroundColor: "#009387" }}
-                                containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 10 }}
-
-                                style={{ color: "#009387" }}
-                                icon={
-                                    <FontAwesome
-                                        name="plus-circle"
-                                        size={15}
-                                        color="white"
-                                        style={{ marginRight: 10 }}
-                                    />
-                                }
-                                title="Join"
-                                onPress={() => setModal(true)}
-                            />}
+                        {renderButton()}
                     </View>
 
 
@@ -160,7 +208,7 @@ const EventDetails = ({ navigation, user, random, all, nearby, }) => {
 
                     <View style={{ flexDirection: "column", flex: 1, }}>
                         <Text style={styles.label}>Capacity </Text>
-                        <Text style={styles.text}>{param.capacity}</Text>
+                        <Text style={styles.text}>{param.members.length}/{param.capacity}</Text>
                     </View>
 
                     <View style={{ flexDirection: "column", justifyContent: "flex-end", flex: 1 }}>
@@ -347,4 +395,14 @@ const mapState = (state) => {
 }
 
 
-export default connect(mapState)(EventDetails);
+const dispatchState = (dispatch) => {
+
+    return {
+
+        generateRecipient: (eventId, userId) => dispatch(generateRecipient(eventId, userId))
+    }
+
+
+}
+
+export default connect(mapState, dispatchState)(EventDetails);
