@@ -15,6 +15,8 @@ import { connect } from 'react-redux'
 
 import { fetchRandomEvents } from '../../Redux/Actions/Events/EventActions'
 
+import Search from './Components/Search'
+
 const Home = ({ fetchRandomEvents, random, navigation }) => {
 
 
@@ -38,16 +40,7 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
     return (
 
         <View style={{ flex: 1 }}>
-            <View style={{ height: heights, backgroundColor: "white", borderBottomWidth: 1, borderBottomColor: "#dddddd" }}>
-                <View style={styles.searchContainer}>
-                    <Ionicon name="ios-search" size={20} color={"#009387"} style={{ marginRight: 10, marginTop: 12 }} />
-                    <TextInput
-                        placeholder="Search"
-                        placeholderTextColor="gray"
-                        style={{ flex: 1, fontWeight: "700", backgroundColor: "white" }}
-                    />
-                </View>
-            </View>
+            <Search />
             <ScrollView
                 scrollEventThrottle={16}
             >
@@ -120,24 +113,7 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
 
 }
 
-const styles = StyleSheet.create({
 
-
-    searchContainer: {
-
-        flexDirection: "row",
-        padding: 10,
-        backgroundColor: "white",
-        marginHorizontal: 20,
-        shadowColor: "#009387",
-        shadowOffset: { width: 12, height: 12 },
-        shadowOpacity: 0.8,
-        elevation: 4,
-        marginTop: Platform.OS === "android" ? 30 : null,
-        borderRadius: 10,
-    }
-
-})
 
 const dispatchState = (dispatch) => {
 

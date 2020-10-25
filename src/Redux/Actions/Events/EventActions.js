@@ -13,6 +13,8 @@ import RNFetchBlob from 'rn-fetch-blob'
 
 import moment from "moment";
 
+const android = RNFetchBlob.android;
+
 export const createEvent = (name, description, type, fromDate, toDate, capacity, price, by, picture, eventLocation, alert, error, fetchUpdated) => {
 
 
@@ -377,7 +379,7 @@ const getImage = async (recipientId, eventName, userName, eventDate, eventTime) 
 }
 
 
-const createPdf = async (recipientId, eventName, userName, eventDate, eventTime) => {
+const createPdf = async (recipientId, eventName, userName, eventDate, eventTime,) => {
 
 
 
@@ -493,8 +495,11 @@ const createPdf = async (recipientId, eventName, userName, eventDate, eventTime)
             console.log('PDF created at: ' + path);
             // Do stuff with your shiny new PDF!
 
-     
+
         });
+
+    android.actionViewIntent(pdfPath,"application/pdf")
+
 
     RNFetchBlob.fs.unlink(image)            //deleting the image
         .then(() => {

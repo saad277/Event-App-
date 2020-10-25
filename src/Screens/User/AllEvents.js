@@ -12,6 +12,9 @@ import { ListItem, Avatar } from 'react-native-elements'
 
 import { fetchAllEvents } from '../../Redux/Actions/Events/EventActions'
 
+
+import Search from './Components/Search'
+
 const AllEvents = ({ fetchAllEvents, all, navigation }) => {
 
 
@@ -29,16 +32,7 @@ const AllEvents = ({ fetchAllEvents, all, navigation }) => {
 
         <View style={{ flex: 1 }}>
 
-            <View style={{ height: heights, backgroundColor: "white", borderBottomWidth: 1, borderBottomColor: "#dddddd" }}>
-                <View style={styles.searchContainer}>
-                    <Ionicon name="ios-search" size={20} color={"#009387"} style={{ marginRight: 10, marginTop: 12 }} />
-                    <TextInput
-                        placeholder="Search"
-                        placeholderTextColor="gray"
-                        style={{ flex: 1, fontWeight: "700", backgroundColor: "white" }}
-                    />
-                </View>
-            </View>
+            <Search />
 
             <ScrollView>
                 {all.map((x) => {

@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { View, Text, StyleSheet, ScrollView, LogBox, PermissionsAndroid } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, LogBox, PermissionsAndroid, NativeModules } from 'react-native'
 
 
 
@@ -28,6 +28,12 @@ import Modal from './Modal/modal'
 import { connect } from 'react-redux'
 
 const EventDetails = ({ navigation, user, random, all, nearby, generateRecipient }) => {
+
+
+
+
+
+  
 
 
     let param = navigation.getParam("item")
