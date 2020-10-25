@@ -46,6 +46,58 @@ const eventReducer = (state = iState, action) => {
 
         case JOIN_EVENT:
             console.log("joinnnnning")
+
+            let updated = action.payload
+
+            let newAll = state.all.map((x) => {
+
+                if (x._id == updated._id) {
+
+                    return updated
+                }
+                else {
+                    return x;
+                }
+
+            })
+
+            let newRandom = state.random.map((x) => {
+
+                if (x._id == updated._id) {
+
+                    return updated
+                }
+                else {
+                    return x;
+                }
+
+            })
+
+            let newNearby = state.nearby.map((x) => {
+
+                if (x._id == updated._id) {
+
+                    return updated
+                }
+                else {
+                    return x;
+                }
+
+            })
+
+
+
+
+            return {
+
+                ...state,
+                all: newAll,
+                random: newRandom,
+                nearby: newNearby
+
+            }
+
+
         case LOG_OUT:
             return {
                 ...state,

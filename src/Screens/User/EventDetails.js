@@ -23,7 +23,9 @@ import moment from "moment";
 
 import Modal from './Modal/modal'
 
-const EventDetails = ({ navigation }) => {
+import { connect } from 'react-redux'
+
+const EventDetails = ({ navigation, user, random, all, nearby, }) => {
 
 
     let param = navigation.getParam("item")
@@ -31,7 +33,13 @@ const EventDetails = ({ navigation }) => {
     console.log(param)
 
 
-    const [toggleModal, setModal] = useState(true)
+
+
+
+    const [toggleModal, setModal] = useState(false)
+
+
+    const [joined, setJoined] = useState(false)
 
 
 
@@ -41,6 +49,43 @@ const EventDetails = ({ navigation }) => {
         setModal(false)
 
     }
+
+
+    const setJoin = () => {
+
+        setJoined(true)
+    }
+
+
+
+    useEffect(() => {
+
+
+        // console.log(param._id)
+
+        // console.log(user._id)
+
+
+        console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+
+
+        console.log(all)
+
+
+
+
+        const arr = param.members.map((x) => {
+
+            if (x.userId == user._id) {
+
+                console.log("wwwwwwwwwwwwwwwwwwwwweeeeeeeee")
+                setJoined(true)
+            }
+
+
+        })
+
+    }, [all, random, nearby])
 
 
     return (
@@ -63,6 +108,7 @@ const EventDetails = ({ navigation }) => {
                 city={param.city}
                 country={param.country}
                 ticket={param.price}
+                setJoin={setJoin}
             />
 
 
@@ -78,22 +124,32 @@ const EventDetails = ({ navigation }) => {
                     </View>
 
                     <View style={styles.iconContainer} >
-                        <Button
-                            buttonStyle={{ backgroundColor: "#009387" }}
-                            containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 10 }}
+
+
+                        {joined ? <Button
+                            buttonStyle={{ backgroundColor: "green" }}
+                            containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 5 }}
 
                             style={{ color: "#009387" }}
-                            icon={
-                                <FontAwesome
-                                    name="plus-circle"
-                                    size={15}
-                                    color="white"
-                                    style={{ marginRight: 10 }}
-                                />
-                            }
-                            title="Join"
-                            onPress={() => setModal(true)}
-                        />
+
+                            title="Generate Recipient"
+                            onPress={() => { }}
+                        /> : <Button
+                                buttonStyle={{ backgroundColor: "#009387" }}
+                                containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 10 }}
+
+                                style={{ color: "#009387" }}
+                                icon={
+                                    <FontAwesome
+                                        name="plus-circle"
+                                        size={15}
+                                        color="white"
+                                        style={{ marginRight: 10 }}
+                                    />
+                                }
+                                title="Join"
+                                onPress={() => setModal(true)}
+                            />}
                     </View>
 
 
@@ -277,7 +333,18 @@ const styles = StyleSheet.create({
 
 
 
+const mapState = (state) => {
 
 
+    return {
 
-export default EventDetails;
+        user: state.auth,
+        nearby: state.event.nearby,
+        all: state.event.all,
+        random: state.event.random,
+    }
+
+}
+
+
+export default connect(mapState)(EventDetails);

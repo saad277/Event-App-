@@ -274,14 +274,19 @@ export const fetchNearby = (latitude, longitude) => {
 
 
 
-export const joinEvent = (eventId, eventName, userName, userId, joinedDate, ticketPrice) => {
+export const joinEvent = (eventId, eventName, userName, userId, joinedDate, ticketPrice, toggleModal, setJoin) => {
 
     return async (dispatch) => {
 
         const token = await AsyncStorage.getItem("userToken")
 
 
-        console.log(eventId, eventName, userName, userId, joinedDate, ticketPrice)
+        //  console.log(eventId, eventName, userName, userId, joinedDate, ticketPrice)
+
+
+
+
+
 
         fetch(baseUrl + "joinEvent", {
             method: "POST",
@@ -311,6 +316,9 @@ export const joinEvent = (eventId, eventName, userName, userId, joinedDate, tick
                     type: JOIN_EVENT,
                     payload: response.event
                 })
+
+                toggleModal()
+                setJoin()
             })
 
 

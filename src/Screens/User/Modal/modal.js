@@ -24,10 +24,10 @@ import { connect } from 'react-redux'
 
 import { joinEvent } from '../../../Redux/Actions/Events/EventActions'
 
-const ModalPop = ({ toggleModal, id, name, fromDate, toDate, ticket, closeModal, user, joinEvent }) => {
+const ModalPop = ({ toggleModal, id, name, fromDate, toDate, ticket, closeModal, user, joinEvent, setJoin }) => {
 
 
-    console.log(user)
+    //console.log(user)
 
     const getPermissions = async () => {
 
@@ -65,7 +65,7 @@ const ModalPop = ({ toggleModal, id, name, fromDate, toDate, ticket, closeModal,
 
     const joinTheEvent = () => {
 
-        joinEvent(id, name, user["name"], user["_id"], fromDate, ticket)
+        joinEvent(id, name, user["name"], user["_id"], fromDate, ticket, closeModal, setJoin)
 
     }
 
@@ -419,7 +419,7 @@ const dispatchState = (dispatch) => {
 
     return {
 
-        joinEvent: (eventId, eventName, userName, userId, joinedDate, ticketPrice) => dispatch(joinEvent(eventId, eventName, userName, userId, joinedDate, ticketPrice))
+        joinEvent: (eventId, eventName, userName, userId, joinedDate, ticketPrice, closeModal, setJoin) => dispatch(joinEvent(eventId, eventName, userName, userId, joinedDate, ticketPrice, closeModal, setJoin))
     }
 
 }
