@@ -13,21 +13,23 @@ import MoreItems from './Components/MoreItems'
 
 import { connect } from 'react-redux'
 
-import { fetchRandomEvents } from '../../Redux/Actions/Events/EventActions'
+import { fetchRandomEvents, fetchAllEvents } from '../../Redux/Actions/Events/EventActions'
 
 import Search from './Components/Search'
 
-const Home = ({ fetchRandomEvents, random, navigation }) => {
+const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
 
 
 
     useEffect(() => {
 
+       
+        fetchAllEvents()
         fetchRandomEvents()
 
     }, [])
 
-    const heights = Platform.OS === "android" ? 100 + StatusBar.currentHeight : 80
+  
 
 
     //console.log(random.length)
@@ -39,10 +41,13 @@ const Home = ({ fetchRandomEvents, random, navigation }) => {
 
     return (
 
-        <View style={{ flex: 1 }}>
-            <Search />
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+
+          
+
             <ScrollView
                 scrollEventThrottle={16}
+
             >
                 <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
                     <Text style={{ fontSize: 28, fontWeight: "700", color: "#009387" }}>Featured Events</Text>
@@ -121,7 +126,8 @@ const dispatchState = (dispatch) => {
     return {
 
 
-        fetchRandomEvents: () => dispatch(fetchRandomEvents())
+        fetchRandomEvents: () => dispatch(fetchRandomEvents()),
+        fetchAllEvents: () => dispatch(fetchAllEvents()),
     }
 
 }

@@ -15,24 +15,18 @@ import { fetchAllEvents } from '../../Redux/Actions/Events/EventActions'
 
 import Search from './Components/Search'
 
-const AllEvents = ({ fetchAllEvents, all, navigation }) => {
+const AllEvents = ({ all, navigation }) => {
 
 
 
-    useEffect(() => {
 
-
-        fetchAllEvents()
-
-    }, [])
-
-    const heights = Platform.OS === "android" ? 100 + StatusBar.currentHeight : 80
+    
 
     return (
 
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "white" }}>
 
-            <Search />
+            <Search navigation={navigation} />
 
             <ScrollView>
                 {all.map((x) => {
@@ -64,34 +58,8 @@ const AllEvents = ({ fetchAllEvents, all, navigation }) => {
 }
 
 
-const styles = StyleSheet.create({
 
 
-    searchContainer: {
-
-        flexDirection: "row",
-        padding: 10,
-        backgroundColor: "white",
-        marginHorizontal: 20,
-        shadowColor: "#009387",
-        shadowOffset: { width: 12, height: 12 },
-        shadowOpacity: 0.8,
-        elevation: 4,
-        marginTop: Platform.OS === "android" ? 30 : null,
-        borderRadius: 10,
-    }
-
-})
-
-const dispatchState = (dispatch) => {
-
-
-    return {
-
-        fetchAllEvents: () => dispatch(fetchAllEvents())
-    }
-
-}
 
 
 const mapState = (state) => {
@@ -105,4 +73,4 @@ const mapState = (state) => {
 }
 
 
-export default connect(mapState, dispatchState)(AllEvents);
+export default connect(mapState)(AllEvents);
