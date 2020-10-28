@@ -109,14 +109,14 @@ const EventDetails = ({ navigation }) => {
 
                     <View style={{ flexDirection: "column", flex: 1, }}>
                         <Text style={styles.label}>From</Text>
-                        <Text style={styles.text}>{moment(param.toDate).format('LT')}</Text>
+                        <Text style={styles.text}>{moment(item.toDate).format('LT')}</Text>
                     </View >
 
 
 
                     <View style={{ flexDirection: "column", justifyContent: "flex-end", flex: 1, marginLeft: 20 }}>
                         <Text style={styles.label}>To</Text>
-                        <Text style={styles.text}>{moment(param.toDate).format('LT')}</Text>
+                        <Text style={styles.text}>{moment(item.toDate).format('LT')}</Text>
                     </View>
 
                     <View style={{ flexDirection: "column", }}>
