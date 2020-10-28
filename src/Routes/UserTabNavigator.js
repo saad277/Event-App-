@@ -58,6 +58,41 @@ const HomeStack = createStackNavigator({
 })
 
 
+const MyEventsStack = createStackNavigator({
+
+    MyEvents: {
+        screen: Upcoming,
+        navigationOptions: () => {
+
+            return {
+
+                title: "My Events",
+                tabBarIcon: ({ tintColor }) => {
+
+                    return <Icon name="calendar" size={26} color={tintColor} />
+
+                }
+            }
+
+        }
+    },
+    EventDetailsUser: {
+
+        screen: EventDetails,
+        navigationOptions: () => {
+
+            return {
+
+                title: "Event Details",
+                headerShown: false,
+            }
+        }
+    }
+
+
+})
+
+
 
 const NearbyStack = createStackNavigator({
 
@@ -118,7 +153,7 @@ const UserTabNavigator = createBottomTabNavigator({
 
     },
     Upcoming: {
-        screen: Upcoming,
+        screen: MyEventsStack,
         navigationOptions: () => {
 
             return {

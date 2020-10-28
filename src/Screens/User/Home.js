@@ -23,13 +23,13 @@ const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
 
     useEffect(() => {
 
-       
+
         fetchAllEvents()
         fetchRandomEvents()
 
     }, [])
 
-  
+
 
 
     //console.log(random.length)
@@ -43,7 +43,7 @@ const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
 
         <View style={{ flex: 1, backgroundColor: "white" }}>
 
-          
+            <Search navigation={navigation} />
 
             <ScrollView
                 scrollEventThrottle={16}
