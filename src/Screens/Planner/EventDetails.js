@@ -56,7 +56,10 @@ const EventDetails = ({ navigation }) => {
 
                     <View style={{ justifyContent: "flex-end", backgroundColor: "red" }}>
 
-                        <Button iconLeft primary success style={{ justifyContent: "center", paddingHorizontal: 10, color: "#009387" }}>
+                        <Button
+                            onPress={() => navigation.navigate("MemberList", { members: item.members })}
+                            iconLeft
+                            primary success style={{ justifyContent: "center", paddingHorizontal: 10, color: "#009387" }}>
                             <Icon name='people' />
                             <Text style={{ marginLeft: 10, fontSize: 16 }}>{item.members.length}</Text>
                         </Button>

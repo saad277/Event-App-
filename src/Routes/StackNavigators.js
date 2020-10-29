@@ -15,6 +15,8 @@ import MyEvents from '../Screens/Planner/MyEvents'
 import EventDetails from '../Screens/Planner/EventDetails'
 import Income from '../Screens/Planner/Income'
 import Settings from '../Screens/Planner/Settings'
+import MemberList from '../Screens/Planner/MemberDetails'
+
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -62,6 +64,9 @@ export const MyEventStack = createStackNavigator({
             }
 
         }
+    },
+    MemberList: {
+        screen: MemberList,
     }
 
 
@@ -98,7 +103,7 @@ export const SettingsStack = createStackNavigator({
             return {
 
                 headerLeft: () => <Icon name="bars" color="#05375a" size={20} style={{ marginLeft: 10 }} onPress={() => navigation.openDrawer()} />,
-               // headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
+                // headerRight: () => <Icon name="plus-circle" color="#05375a" size={24} style={{ marginRight: 10 }} />,
             }
         }
     }
