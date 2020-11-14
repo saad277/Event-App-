@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "137901178705",
+    "firebase_url": "https://react-slack-app-b06b0.firebaseio.com",
+    "project_id": "react-slack-app-b06b0",
+    "storage_bucket": "react-slack-app-b06b0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:137901178705:android:b5dd17f331af320fac1d70",
+        "android_client_info": {
+          "package_name": "com.eventapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "137901178705-cumr3r2v1mbnbms9u5khed7u9gtupdre.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPDj_jI9s0qKkEIGnvMa4GIrUIEJPpEVM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "137901178705-cumr3r2v1mbnbms9u5khed7u9gtupdre.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

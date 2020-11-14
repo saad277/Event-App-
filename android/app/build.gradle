@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
 
+apply plugin: 'com.google.gms.google-services' // <- Add this line
+
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 import com.android.build.OutputFile
@@ -203,6 +205,8 @@ dependencies {
      implementation project(':react-native-fs')
      implementation project(':react-native-pdf-lib')
      implementation project(':rn-fetch-blob')  
+     implementation project(path: ":@react-native-firebase_app")
+     implementation project(path: ":@react-native-firebase_messaging")
 
 
       implementation 'com.android.support:multidex:2.0.1'

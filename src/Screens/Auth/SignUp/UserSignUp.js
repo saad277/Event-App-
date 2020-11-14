@@ -15,9 +15,9 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 const UserSignUp = ({ navigation, userSignUp }) => {
 
 
-    const [name, setName] = useState("saad")
-    const [email, setEmail] = useState("saad9@gmail.com")
-    const [password, setPassword] = useState("123")
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
 
     const [errors, setError] = useState([])
 

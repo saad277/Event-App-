@@ -20,6 +20,8 @@ import com.reactnativecommunity.geolocation.GeolocationPackage;
 import com.reactnativecommunity.rnpermissions.RNPermissionsPackage;
 import com.rnfs.RNFSPackage;  // <--- import
 import com.RNFetchBlob.RNFetchBlobPackage; 
+import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
+import io.invertase.firebase.messaging.ReactNativeFirebaseMessagingPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -43,6 +45,8 @@ public class MainApplication extends Application implements ReactApplication {
           new GeolocationPackage();
           new RNFSPackage();
           new RNFetchBlobPackage();
+          new ReactNativeFirebaseAppPackage();
+          new ReactNativeFirebaseMessagingPackage();
          
           packages.add(new LottiePackage());
           

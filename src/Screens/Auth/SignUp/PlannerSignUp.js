@@ -15,10 +15,10 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 const PlannerSignUp = ({ navigation, plannerSignUp }) => {
 
 
-    const [name, setName] = useState("saad8")
-    const [email, setEmail] = useState("saad8@gmail.com")
-    const [organization, setOrg] = useState("home")
-    const [password, setPassword] = useState("123")
+    const [name, setName] = useState("")
+    const [email, setEmail] = useState("")
+    const [organization, setOrg] = useState("")
+    const [password, setPassword] = useState("")
 
     const [errors, setError] = useState([])
 
