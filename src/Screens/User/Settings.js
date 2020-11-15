@@ -15,7 +15,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { connect } from 'react-redux'
-import { logOut } from '../../Redux/Actions/Auth/AuthActions'
+import { userLogout } from '../../Redux/Actions/Auth/AuthActions'
 
 import Email from './Components/Email'
 import Seperator from './Components/Seperator'
@@ -23,14 +23,14 @@ import Seperator from './Components/Seperator'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const Settings = ({ navigation, logOut, auth }) => {
+const Settings = ({ navigation, userLogout, auth }) => {
 
     const logout = async () => {
 
 
         await AsyncStorage.clear()
 
-        logOut();
+        await userLogout(auth.email);
 
         navigation.navigate("Loading")
 
@@ -55,7 +55,7 @@ const Settings = ({ navigation, logOut, auth }) => {
                                     source={{ uri: auth.picture }}
                                 />
                                 <Text style={styles.userNameText}>{auth.name}</Text>
-                            
+
                             </View>
                         </ImageBackground>
                     </View>
@@ -180,7 +180,7 @@ const dispatchToProps = (dispatch) => {
 
     return {
 
-        logOut: () => dispatch(logOut())
+        userLogout: (email) => dispatch(userLogout(email))
 
     }
 

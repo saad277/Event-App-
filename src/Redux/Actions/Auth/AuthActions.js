@@ -9,9 +9,22 @@ import { baseUrl } from '../../../BaseUrl/baseUrl'
 
 
 
-export const signIn = (email, password, navigation,alert) => {
+
+
+
+
+
+
+
+export const signIn = (email, password, token, navigation, alert) => {
 
     console.log(email, password)
+
+    console.log(token)
+
+
+    let cloudToken = token
+
 
     return async (dispatch) => {
 
@@ -27,7 +40,8 @@ export const signIn = (email, password, navigation,alert) => {
             body: JSON.stringify({
 
                 "email": email,
-                "password": password
+                "password": password,
+                "cloudToken": cloudToken
             })
 
         })
@@ -38,10 +52,10 @@ export const signIn = (email, password, navigation,alert) => {
 
                 if (response.error) {
 
-                    alert(response.error, "Error")
+                    // alert(response.error, "Error")
                 }
 
-              
+
 
 
                 if (response.user) {
@@ -100,9 +114,11 @@ export const signIn = (email, password, navigation,alert) => {
 export const logOut = () => {
 
 
-    return (dispatch) => {
+    return async (dispatch) => {
 
         console.log("Logged Out")
+
+        await asyncStorage.clear()
 
         dispatch({
 
@@ -112,6 +128,49 @@ export const logOut = () => {
 
     }
 
+
+}
+
+export const userLogout = (email) => {
+
+    console.log(email)
+
+    
+    return async (dispatch) => {
+
+
+        fetch(baseUrl + "we", {
+
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body: JSON.stringify({
+
+                "email": email,
+
+            })
+
+        }).then((res) => res.json())
+            .then(async (response) => {
+
+
+                if (response.result) {
+
+                    console.log(response.result)
+
+                    dispatch({
+
+                        type: LOG_OUT,
+                        payload: {}
+                    })
+
+                }
+
+            })
+
+    }
 
 }
 

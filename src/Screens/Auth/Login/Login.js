@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Dimensions, Platform, TextInput, StatusBar, ImageBackground } from 'react-native'
 
 import * as Animateable from 'react-native-animatable'
@@ -11,13 +11,15 @@ import { signIn } from '../../../Redux/Actions/Auth/AuthActions'
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 
+import messaging from '@react-native-firebase/messaging';
+
 const Login = ({ navigation, signIn, }) => {
 
 
 
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState("saad@gmail.com")
+    const [password, setPassword] = useState("123")
 
     const [errors, setError] = useState([])
 
@@ -28,6 +30,41 @@ const Login = ({ navigation, signIn, }) => {
     const [alertText, setText] = useState("")
 
     const [alertHeader, setHeader] = useState("")
+
+    const [token, setToken] = useState("")
+
+    useEffect(() => {
+
+
+        _checkPermission()
+
+    }, [])
+
+
+    const _checkPermission = async () => {
+        const enabled = await messaging().hasPermission();
+        if (enabled) {
+            const device = await messaging().getToken()
+            // console.log(device)
+            setToken(device)
+        }
+        else {
+            await getPermission()
+        }
+    }
+
+    const getPermission = async () => {
+        messaging().requestPermission()
+            .then(() => {
+                _checkPermission()
+
+
+            })
+            .catch(error => {
+                // User has rejected permissions  
+                console.log(permission)
+            });
+    }
 
 
 
@@ -91,7 +128,7 @@ const Login = ({ navigation, signIn, }) => {
         if (validateEmail && validatePassword) {
 
 
-            signIn(email, password, navigation, settingAlert)
+            signIn(email, password, token, navigation, settingAlert)
 
             setEmail("")
             setPassword("")
@@ -290,7 +327,7 @@ const dispatchStateToProps = (dispatch) => {
 
 
     return {
-        signIn: (email, password, navigation,alert) => dispatch(signIn(email, password, navigation,alert)),
+        signIn: (email, password, navigation, alert) => dispatch(signIn(email, password, navigation, alert)),
 
     }
 
