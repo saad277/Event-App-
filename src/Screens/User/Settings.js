@@ -28,12 +28,16 @@ const Settings = ({ navigation, userLogout, auth }) => {
     const logout = async () => {
 
 
-        await AsyncStorage.clear()
 
-        await userLogout(auth.email);
+        await userLogout(auth.email, navigate);
 
+      
+
+
+    }
+
+    const navigate = () => {
         navigation.navigate("Loading")
-
 
     }
 
@@ -180,7 +184,7 @@ const dispatchToProps = (dispatch) => {
 
     return {
 
-        userLogout: (email) => dispatch(userLogout(email))
+        userLogout: (email, navigation) => dispatch(userLogout(email, navigation))
 
     }
 

@@ -131,19 +131,22 @@ export const logOut = () => {
 
 }
 
-export const userLogout = (email) => {
+export const userLogout = (email, navigate) => {
 
     console.log(email)
 
-    
+
     return async (dispatch) => {
 
+        console.log("gggggggggggggggggggggggggggggggggggggggg")
+        const token = await asyncStorage.getItem("userToken")
 
-        fetch(baseUrl + "we", {
+        fetch(baseUrl + "logOut", {
 
             method: "POST",
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': "Bearer " + token
 
             },
             body: JSON.stringify({
@@ -160,11 +163,15 @@ export const userLogout = (email) => {
 
                     console.log(response.result)
 
+                    await asyncStorage.clear()
+
                     dispatch({
 
                         type: LOG_OUT,
                         payload: {}
                     })
+
+                    navigate()
 
                 }
 
