@@ -4,7 +4,6 @@ import {
 
     Image,
     ImageBackground,
-
     Platform,
     ScrollView,
     StyleSheet,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, ScrollView, ActivityIndicator } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -28,6 +28,15 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
     const [alertText, setText] = useState("")
 
     const [alertHeader, setHeader] = useState("")
+
+    const [loading, setLoading] = useState(false)
+
+
+    const toggleLoading = () => {
+
+        setLoading(false)
+    }
+
 
 
     const hideAlert = () => {
@@ -133,8 +142,9 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
         if (validateEmail && validatePassword && validateName && validateOrg) {
 
 
+           setLoading(true)
 
-            plannerSignUp(name, email, password, organization, settingAlert)
+            plannerSignUp(name, email, password, organization, settingAlert, toggleLoading)
 
             setName("")
             setEmail("")
@@ -167,7 +177,7 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
                 closeOnHardwareBackPress={false}
 
                 showConfirmButton={true}
-            
+
                 confirmText="Okay"
                 confirmButtonColor="#009387"
 
@@ -236,7 +246,8 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
 
                     <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
 
-                    <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+
+                    {loading ? (<ActivityIndicator color={"green"} size={"large"} />) : (<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
                         <LinearGradient
                             colors={["#08d4c4", "#01ab9d"]}
                             style={styles.signIn}
@@ -247,7 +258,8 @@ const PlannerSignUp = ({ navigation, plannerSignUp }) => {
 
 
 
-                    </TouchableOpacity>
+                    </TouchableOpacity>)}
+
 
                 </ScrollView>
 
@@ -336,7 +348,7 @@ const dispatchState = (dispatch) => {
 
     return {
 
-        plannerSignUp: (name, email, password, organization, alert) => dispatch(plannerSignUp(name, email, password, organization, alert))
+        plannerSignUp: (name, email, password, organization, alert, toggle) => dispatch(plannerSignUp(name, email, password, organization, alert, toggle))
     }
 
 }

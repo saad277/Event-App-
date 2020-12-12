@@ -23,7 +23,7 @@ const Loading = ({ navigation, setUser }) => {
             const user = await AsyncStorage.getItem("user")
             const userData = JSON.parse(user)
 
-            console.log(userToken)
+           // console.log(userToken)
 
             if (userToken) {
 
@@ -37,7 +37,7 @@ const Loading = ({ navigation, setUser }) => {
                 const planner = await AsyncStorage.getItem("planner")
                 const plannerData = JSON.parse(planner)
 
-                console.log(plannerToken)
+               // console.log(plannerToken)
 
                 if (plannerToken) {
 

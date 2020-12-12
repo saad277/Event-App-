@@ -498,7 +498,9 @@ const createPdf = async (recipientId, eventName, userName, eventDate, eventTime,
 
         });
 
-    android.actionViewIntent(pdfPath,"application/pdf")
+   
+
+    android.actionViewIntent(pdfPath, "application/pdf")
 
 
     RNFetchBlob.fs.unlink(image)            //deleting the image
@@ -508,6 +510,8 @@ const createPdf = async (recipientId, eventName, userName, eventDate, eventTime,
 
         })
         .catch((err) => console.log(err))
+
+
 
 
 }
@@ -544,7 +548,7 @@ export const generateRecipient = (eventId, userId) => {
 
 
 
-                getImage(_id, eventName, userName, joinedDate.slice(0, 10), moment(joinedDate).format('LT'))
+                getImage(_id, eventName, userName, joinedDate.slice(0, 10), moment(joinedDate).format('LT'),)
 
             })
 

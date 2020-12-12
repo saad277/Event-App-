@@ -171,6 +171,7 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            crunchPngs false
         }
     }
 
@@ -205,8 +206,12 @@ dependencies {
      implementation project(':react-native-fs')
      implementation project(':react-native-pdf-lib')
      implementation project(':rn-fetch-blob')  
-     implementation project(path: ":@react-native-firebase_app")
-     implementation project(path: ":@react-native-firebase_messaging")
+
+     implementation project(':react-native-firebase')
+    
+
+     implementation "com.google.firebase:firebase-core:16.0.9"
+      implementation "com.google.firebase:firebase-messaging:18.0.0"
 
 
       implementation 'com.android.support:multidex:2.0.1'

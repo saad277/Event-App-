@@ -366,7 +366,7 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
 
                 <ProgressStep label="Third Step" nextBtnDisabled={eventLocation ? false : true} >
 
-                    <View style={{ flex: 1, height: 350 }}>
+                    <View style={{ flex: 1, height: 300 }}>
 
                         <Map region={region} forwardedRef={mapRef} />
 
@@ -376,7 +376,7 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
 
                     </View>
 
-                    <View style={{ backgroundColor: "white", flexDirection: "row" }}>
+                    <View style={{ backgroundColor: "white", flexDirection: "row", }}>
 
                         <Input placeholder='Enter Location' style={{ marginLeft: 20, width: 200, flex: 1, }} value={location} onChangeText={(text) => setLocation(text)} />
 
@@ -438,7 +438,7 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
 
                         <Item style={{ padding: 10, justifyContent: "center", marginTop: 15, }}>
                             <Icon name='ticket' size={30} color="#009387" />
-                            <Input placeholder='Enter Event Capacity' style={{ marginLeft: 20 }} value={price} keyboardType={"numeric"} onChangeText={(text) => setPrice(text)} />
+                            <Input placeholder='Event Fees' style={{ marginLeft: 20 }} value={price} keyboardType={"numeric"} onChangeText={(text) => setPrice(text)} />
                         </Item>
 
 

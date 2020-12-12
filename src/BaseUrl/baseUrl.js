@@ -6,10 +6,10 @@
 
 
 //for Phone 
-export const baseUrl="http://192.168.0.106:4000/"
+//export const baseUrl="http://192.168.0.106:4000/"
 
 
 
 //for Deployed
-//export const baseUrl="https://event-app-back.herokuapp.com/"
+export const baseUrl="https://event-app-2.herokuapp.com/"
 

@@ -16,7 +16,7 @@ import { baseUrl } from '../../../BaseUrl/baseUrl'
 
 
 
-export const signIn = (email, password, token, navigation, alert) => {
+export const signIn = (email, password, token, navigation, settingAlert, toggle) => {
 
     console.log(email, password)
 
@@ -48,17 +48,25 @@ export const signIn = (email, password, token, navigation, alert) => {
             .then((res) => res.json())
             .then(async (response) => {
 
+                toggle()
+
                 console.log(response)
 
                 if (response.error) {
 
-                    // alert(response.error, "Error")
+
+                    settingAlert(response.error, "Error")
+
+                    return null;
+
                 }
 
 
 
 
                 if (response.user) {
+
+
 
                     await asyncStorage.setItem("userToken", response.token)
 
@@ -99,6 +107,9 @@ export const signIn = (email, password, token, navigation, alert) => {
 
 
 
+            }).catch((err) => {
+
+                return Promise.reject(err)
             })
 
 
@@ -111,7 +122,7 @@ export const signIn = (email, password, token, navigation, alert) => {
 
 
 
-export const logOut = () => {
+export const logOut = async () => {
 
 
     return async (dispatch) => {
@@ -138,7 +149,7 @@ export const userLogout = (email, navigate) => {
 
     return async (dispatch) => {
 
-        console.log("gggggggggggggggggggggggggggggggggggggggg")
+
         const token = await asyncStorage.getItem("userToken")
 
         fetch(baseUrl + "logOut", {
@@ -183,7 +194,7 @@ export const userLogout = (email, navigate) => {
 
 
 
-export const userSignUp = (name, email, password, alert) => {
+export const userSignUp = (name, email, password, alert, toggle) => {
 
 
     return (dispatch) => {
@@ -207,6 +218,8 @@ export const userSignUp = (name, email, password, alert) => {
             .then((response) => {
 
                 console.log(response)
+
+                toggle()
 
                 if (response.error) {
 
@@ -233,7 +246,7 @@ export const userSignUp = (name, email, password, alert) => {
 
 
 
-export const plannerSignUp = (name, email, password, organization, alert) => {
+export const plannerSignUp = (name, email, password, organization, alert, toggle) => {
 
 
     return (dispatch) => {
@@ -259,15 +272,18 @@ export const plannerSignUp = (name, email, password, organization, alert) => {
 
                 console.log(response)
 
-
+                toggle()
                 if (response.error) {
 
                     alert(response.error, "Error")
+
+
                 }
 
                 if (response.success) {
 
                     alert(response.success, "Success")
+
                 }
 
 

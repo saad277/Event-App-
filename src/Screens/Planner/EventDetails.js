@@ -1,25 +1,70 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, } from 'react'
 
-import { View, Text, StyleSheet, ScrollView, RefreshControl, FlatList, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native'
 
 
 import Material from 'react-native-vector-icons/MaterialIcons'
-
 import FontAwesome from 'react-native-vector-icons/FontAwesome5'
-
 import { Tile } from 'react-native-elements';
-
 import { Container, Header, Content, Button, Icon, Item, Accordion } from 'native-base';
-
-
-
+import AwesomeAlert from 'react-native-awesome-alerts';
 import moment from "moment";
+
+
 
 const EventDetails = ({ navigation }) => {
 
     const item = navigation.getParam("item")
 
     console.log(item)
+
+    const [alert, setAlert] = useState(false)
+
+    const [loading, setLoading] = useState(false)
+
+    const toggleAlert = () => {
+
+
+        setAlert(!alert)
+
+    }
+
+
+    const sendNotification = () => {
+
+        console.log(item["_id"])
+
+
+        setAlert(false)
+
+        setLoading(true)
+
+        fetch("https://fcm-flask.herokuapp.com/pushNoti", {
+
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+
+            },
+            body: JSON.stringify({
+                "name": item["name"],
+                "eventId": item["_id"],
+                "date": item.fromDate.slice(0, 10)
+            })
+
+        }).then((res) => {
+
+            console.log(res.status)
+           
+            setLoading(false)
+        }).catch((err) => {
+            toggleAlert()
+            setLoading(false)
+        })
+
+
+
+    }
 
 
     return (
@@ -34,6 +79,26 @@ const EventDetails = ({ navigation }) => {
 
             <View style={styles.secondContainer}>
 
+                <AwesomeAlert
+                    show={alert}
+
+                    title="Send Event Reminder To All Members"
+
+                    closeOnTouchOutside={true}
+                    closeOnHardwareBackPress={true}
+                    showCancelButton={true}
+                    showConfirmButton={true}
+                    cancelText="Cancel"
+                    confirmText="Yes"
+                    confirmButtonColor="#DD6B55"
+                    onCancelPressed={() => {
+                        toggleAlert();
+                    }}
+                    onConfirmPressed={() => {
+                        sendNotification();
+                    }}
+                />
+
                 <View style={styles.rowContainer}>
 
                     <View style={{ flexDirection: "column", flex: 1 }}>
@@ -43,9 +108,14 @@ const EventDetails = ({ navigation }) => {
 
                     </View>
 
-                    <View style={styles.iconContainer} >
-                        <Material size={40} color={"#009387"} name={"favorite"} style={{ marginRight: 20, marginTop: 20 }} />
-                    </View>
+                    <TouchableOpacity style={styles.iconContainer} onPress={() => toggleAlert()} >
+                        {loading ? (<ActivityIndicator />) :
+                            (<Material
+                                size={50}
+                                color={"#009387"}
+                                name={"circle-notifications"}
+                                style={{ marginRight: 20, marginTop: 20 }} />)}
+                    </TouchableOpacity>
 
 
                 </View>

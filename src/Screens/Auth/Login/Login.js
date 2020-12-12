@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, Button, TouchableOpacity, ScrollView, Dimensions, Platform, TextInput, StatusBar, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform, TextInput, StatusBar, ImageBackground, ActivityIndicator } from 'react-native'
 
 import * as Animateable from 'react-native-animatable'
 import LinearGradient from 'react-native-linear-gradient'
@@ -11,60 +11,50 @@ import { signIn } from '../../../Redux/Actions/Auth/AuthActions'
 
 import AwesomeAlert from 'react-native-awesome-alerts';
 
-import messaging from '@react-native-firebase/messaging';
+import firebase from 'react-native-firebase'
+
+
 
 const Login = ({ navigation, signIn, }) => {
 
 
 
 
-    const [email, setEmail] = useState("saad@gmail.com")
-    const [password, setPassword] = useState("123")
-
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [errors, setError] = useState([])
-
-
-
     const [alert, setAlert] = useState(false)
-
     const [alertText, setText] = useState("")
-
     const [alertHeader, setHeader] = useState("")
-
     const [token, setToken] = useState("")
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
 
 
-        _checkPermission()
+
+        getToken()
+
+
 
     }, [])
 
 
-    const _checkPermission = async () => {
-        const enabled = await messaging().hasPermission();
-        if (enabled) {
-            const device = await messaging().getToken()
-            // console.log(device)
-            setToken(device)
-        }
-        else {
-            await getPermission()
+    const toggleLoading = () => {
+
+        setLoading(false)
+    }
+
+
+    const getToken = async () => {
+
+        const fcmToken = await firebase.messaging().getToken();
+        if (fcmToken) {
+            console.log(fcmToken)
+            setToken(fcmToken)
         }
     }
 
-    const getPermission = async () => {
-        messaging().requestPermission()
-            .then(() => {
-                _checkPermission()
-
-
-            })
-            .catch(error => {
-                // User has rejected permissions  
-                console.log(permission)
-            });
-    }
 
 
 
@@ -121,6 +111,8 @@ const Login = ({ navigation, signIn, }) => {
     const handleSubmit = () => {
 
 
+        setLoading(true)
+
         let validateEmail = verifyEmail(email)
 
         let validatePassword = verifyPassword(password)
@@ -128,7 +120,7 @@ const Login = ({ navigation, signIn, }) => {
         if (validateEmail && validatePassword) {
 
 
-            signIn(email, password, token, navigation, settingAlert)
+            signIn(email, password, token, navigation, settingAlert, toggleLoading)
 
             setEmail("")
             setPassword("")
@@ -137,6 +129,8 @@ const Login = ({ navigation, signIn, }) => {
 
             console.log("Invalid Email Or Password")
             setError(["Invalid Email OR Password"])
+
+
 
         }
 
@@ -174,8 +168,19 @@ const Login = ({ navigation, signIn, }) => {
             />
 
 
+
+
             <View style={styles.header}>
                 <Text style={styles.textHeader}>Welcome !</Text>
+
+
+
+
+
+
+
+
+
             </View>
             <Animateable.View style={styles.footer} animation="fadeInUpBig"  >
 
@@ -221,7 +226,8 @@ const Login = ({ navigation, signIn, }) => {
 
                     </View>
                     <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
-                    <View style={styles.button} >
+
+                    {loading ? (<ActivityIndicator size={"large"} color="green" />) : (<View style={styles.button} >
                         <LinearGradient
                             colors={["#08d4c4", "#01ab9d"]}
                             style={styles.signIn}
@@ -229,6 +235,8 @@ const Login = ({ navigation, signIn, }) => {
                             <Text style={[styles.textSign, { color: "#fff" }]} onPress={() => handleSubmit()} >Sign In</Text>
 
                         </LinearGradient>
+
+
 
                         <TouchableOpacity
 
@@ -238,7 +246,8 @@ const Login = ({ navigation, signIn, }) => {
                                 onPress={() => navigation.navigate("RegisterAs")}>Sign Up</Text>
                         </TouchableOpacity>
 
-                    </View>
+                    </View>)}
+
                 </ScrollView>
             </Animateable.View>
         </ImageBackground>
@@ -327,7 +336,7 @@ const dispatchStateToProps = (dispatch) => {
 
 
     return {
-        signIn: (email, password, navigation, alert) => dispatch(signIn(email, password, navigation, alert)),
+        signIn: (email, password, token, navigation, alert, toggle) => dispatch(signIn(email, password, token, navigation, alert, toggle)),
 
     }
 

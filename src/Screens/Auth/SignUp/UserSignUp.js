@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, ScrollView, ActivityIndicator } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -28,6 +28,14 @@ const UserSignUp = ({ navigation, userSignUp }) => {
     const [alertText, setText] = useState("")
 
     const [alertHeader, setHeader] = useState("")
+
+    const [loading, setLoading] = useState(false)
+
+
+    const toggleLoading = () => {
+
+        setLoading(false)
+    }
 
 
     const hideAlert = () => {
@@ -109,8 +117,9 @@ const UserSignUp = ({ navigation, userSignUp }) => {
         if (validateEmail && validatePassword && validateName) {
 
 
+                setLoading(true)
 
-            userSignUp(name, email, password, settingAlert)
+            userSignUp(name, email, password, settingAlert, toggleLoading)
 
             setName("")
             setEmail("")
@@ -202,7 +211,7 @@ const UserSignUp = ({ navigation, userSignUp }) => {
                     <Text style={{ color: "red", textAlign: "center", marginTop: 10, fontSize: 20 }}>{errors[0]}</Text>
 
 
-                    <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+                    {loading ? (<ActivityIndicator size={"large"} color={"green"} />) : (<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
                         <LinearGradient
                             colors={["#08d4c4", "#01ab9d"]}
                             style={styles.signIn}
@@ -213,7 +222,8 @@ const UserSignUp = ({ navigation, userSignUp }) => {
 
 
 
-                    </TouchableOpacity>
+                    </TouchableOpacity>)}
+
 
                 </ScrollView>
             </Animateable.View>
@@ -299,7 +309,7 @@ const dispatchToProps = (dispatch) => {
 
     return {
 
-        userSignUp: (name, email, password, alert) => dispatch(userSignUp(name, email, password, alert))
+        userSignUp: (name, email, password, alert, toggle) => dispatch(userSignUp(name, email, password, alert, toggle))
 
     }
 

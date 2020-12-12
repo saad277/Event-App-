@@ -4,7 +4,7 @@
 
 import React, { useState, useEffect } from 'react'
 
-import { View, Text, StyleSheet, ScrollView, LogBox, PermissionsAndroid, NativeModules } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, LogBox, PermissionsAndroid, ActivityIndicator } from 'react-native'
 
 
 
@@ -33,7 +33,7 @@ const EventDetails = ({ navigation, user, random, all, nearby, generateRecipient
 
 
 
-  
+
 
 
     let param = navigation.getParam("item")
@@ -49,6 +49,14 @@ const EventDetails = ({ navigation, user, random, all, nearby, generateRecipient
 
     const [joined, setJoined] = useState(false)
 
+    const [loading, setLoading] = useState(false)
+
+
+
+    const toggleLoading = () => {
+
+        setLoading(false)
+    }
 
 
     const closeModal = () => {
@@ -96,7 +104,7 @@ const EventDetails = ({ navigation, user, random, all, nearby, generateRecipient
         // console.log(user._id)
 
 
-        console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz")
+
 
 
         console.log(all)
@@ -108,7 +116,7 @@ const EventDetails = ({ navigation, user, random, all, nearby, generateRecipient
 
             if (x.userId == user._id) {
 
-                console.log("wwwwwwwwwwwwwwwwwwwwweeeeeeeee")
+
                 setJoined(true)
             }
 
@@ -125,15 +133,21 @@ const EventDetails = ({ navigation, user, random, all, nearby, generateRecipient
 
         if (joined) {
 
-            return (<Button
+            return loading ? (<ActivityIndicator color={"green"} size={"large"} />) : (<Button
                 buttonStyle={{ backgroundColor: "green" }}
                 containerStyle={{ color: "#009387", paddingHorizontal: 20, marginTop: 5 }}
 
                 style={{ color: "#009387" }}
 
                 title="Generate Recipient"
-                onPress={() => generateRecipient(param._id, user._id)}
+                onPress={() => {
+                   
+                    generateRecipient(param._id, user._id)
+                }}
             />)
+
+
+
         } else if (param.capacity == param.members.length) {
 
             return (

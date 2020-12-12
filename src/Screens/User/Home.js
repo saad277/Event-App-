@@ -17,6 +17,8 @@ import { fetchRandomEvents, fetchAllEvents } from '../../Redux/Actions/Events/Ev
 
 import Search from './Components/Search'
 
+import firebase from 'react-native-firebase'
+
 const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
 
 
@@ -27,8 +29,46 @@ const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
         fetchAllEvents()
         fetchRandomEvents()
 
+
+        const channel = new firebase.notifications.Android.Channel("insider", "insider channel",
+            firebase.notifications.Android.Importance.Max);
+
+        firebase.notifications().android.createChannel(channel);
+
+
+        createNotificationListener();
+
     }, [])
 
+
+    const createNotificationListener = async () => {
+
+
+
+        firebase.notifications().onNotification((notification) => {
+
+            notification.android.setChannelId("insider")
+                .setSound("default")
+                .android.setLargeIcon('ic_launcher')
+                .android.setAutoCancel(true)
+                .android.setPriority(firebase.notifications.Android.Priority.High)
+
+
+
+            firebase.notifications().displayNotification(notification)
+
+            // console.log(notification.body)
+            // console.log(notification.title)
+
+
+
+
+        })
+
+
+
+
+    }
 
 
 
@@ -39,7 +79,7 @@ const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
     let secondHalf = random.slice(3, 6)
 
 
-    return (
+    return firstHalf ? (
 
         <View style={{ flex: 1, backgroundColor: "white" }}>
 
@@ -113,7 +153,9 @@ const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
             </ScrollView>
         </View>
 
-    )
+    ) : (<View>
+        <Text>No Events Available</Text>
+    </View>)
 
 
 }
