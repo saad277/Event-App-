@@ -122,7 +122,7 @@ export const signIn = (email, password, token, navigation, settingAlert, toggle)
 
 
 
-export const logOut = async () => {
+export const logOut = () => {
 
 
     return async (dispatch) => {

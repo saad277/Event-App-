@@ -15,8 +15,6 @@ import { connect } from 'react-redux'
 
 import { fetchRandomEvents, fetchAllEvents } from '../../Redux/Actions/Events/EventActions'
 
-import Search from './Components/Search'
-
 import firebase from 'react-native-firebase'
 
 const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
@@ -83,7 +81,16 @@ const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
 
         <View style={{ flex: 1, backgroundColor: "white" }}>
 
-            <Search navigation={navigation} />
+            <View style={styles.searchContainer}>
+                <TextInput
+                    style={styles.inputContainer}
+                    placeholder="Search"
+                    onFocus={() => navigation.navigate("AllEvents")}
+                  
+                />
+
+                <Ionicon name="ios-search" size={25} color={"#009387"} style={styles.plus} />
+            </View>
 
             <ScrollView
                 scrollEventThrottle={16}
@@ -159,6 +166,56 @@ const Home = ({ fetchRandomEvents, fetchAllEvents, random, navigation }) => {
 
 
 }
+
+const styles = StyleSheet.create({
+
+
+    searchContainer: {
+
+        flexDirection: "row",
+        padding: 10,
+        backgroundColor: "white",
+        marginHorizontal: 20,
+        shadowColor: "#009387",
+        shadowOffset: { width: 12, height: 12 },
+        shadowOpacity: 0.8,
+        elevation: 4,
+        marginTop: Platform.OS === "android" ? 30 : null,
+        borderRadius: 10,
+    },
+
+
+    input: {
+        maxHeight: 50,
+        width: 250,
+        flex: 1,
+
+    },
+
+    inputContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        width: "90%",
+        backgroundColor: "white",
+        shadowColor: "#009387",
+        shadowOffset: { width: 12, height: 12 },
+        shadowOpacity: 0.8,
+        elevation: 4,
+
+    },
+    container: {
+        flex: 1,
+        backgroundColor: "#ffffff",
+    },
+    plus: {
+
+        marginTop: "4%",
+        marginLeft: 10
+
+    },
+
+})
 
 
 

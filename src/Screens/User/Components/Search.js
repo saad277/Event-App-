@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { View, Text, SafeAreaView, TextInput, StyleSheet, Platform, StatusBar, ScrollView, Image, Dimensions, FlatList, TouchableOpacity } from 'react-native'
 
 
@@ -13,7 +13,9 @@ import { connect } from 'react-redux'
 
 const Search = ({ all, navigation }) => {
 
-   
+
+    const inputRef = useRef(null)
+
 
     const handleSelectItem = (item, index) => {
 
@@ -38,6 +40,7 @@ const Search = ({ all, navigation }) => {
 
             <Autocomplete
 
+                ref={inputRef}
                 style={styles.inputContainer}
                 placeholder="Search"
 

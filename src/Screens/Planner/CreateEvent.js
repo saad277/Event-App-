@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 
 
-import { View, Text, ScrollView, StyleSheet, SafeAreaView, Image, } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, SafeAreaView, Image, Button as Btn, TouchableOpacity } from 'react-native'
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
 import { Item, Input, Button, Picker, Form, Textarea, } from 'native-base';
 
@@ -13,7 +13,7 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 
 import ImagePicker from 'react-native-image-crop-picker';
 
-import Map from './Map/Map'
+
 
 import { connect } from 'react-redux'
 import { createEvent, fetchEvents } from '../../Redux/Actions/Events/EventActions'
@@ -25,7 +25,7 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
 
     const by = planner.name
 
-    let mapRef = useRef(null)
+
 
     //alert states
 
@@ -47,12 +47,7 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
     const [capacity, setCapacity] = useState("")
     const [price, setPrice] = useState(null)
 
-    const [region, setRegion] = useState({
-        latitude: 10,
-        longitude: 10,
-        latitudeDelta: 0.001,
-        longitudeDelta: 0.001
-    })
+
 
 
     //from states
@@ -123,17 +118,8 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
 
                 setEventLocation(details)
 
-                setRegion({
-                    latitude: response.data[0].latitude,
-                    longitude: response.data[0].longitude,
-                    latitudeDelta: 0.001,
-                    longitudeDelta: 0.001
-                })
 
-                mapRef.current.animateToCoordinate({
-                    latitude: response.data[0].latitude,
-                    longitude: response.data[0].longitude
-                })
+
             }
 
 
@@ -366,31 +352,33 @@ const CreateEvent = ({ createEvent, planner, navigation, fetchEvents }) => {
 
                 <ProgressStep label="Third Step" nextBtnDisabled={eventLocation ? false : true} >
 
-                    <View style={{ flex: 1, height: 300 }}>
+                    <Text style={[styles.dateHeader, { alignSelf: "center" }]}>Search A place </Text>
 
-                        <Map region={region} forwardedRef={mapRef} />
-
-
-
-
-
+                    <View style={{ marginTop: 15 }}>
+                        <Text style={{ fontSize: 25, marginLeft: 10 }}>Country : {eventLocation ? eventLocation.country : null} </Text>
+                        <Text style={{ fontSize: 25, marginLeft: 10 }}>City : {eventLocation ? eventLocation.label : null}</Text>
                     </View>
 
-                    <View style={{ backgroundColor: "white", flexDirection: "row", }}>
 
-                        <Input placeholder='Enter Location' style={{ marginLeft: 20, width: 200, flex: 1, }} value={location} onChangeText={(text) => setLocation(text)} />
+                    <View style={{ backgroundColor: "white", flexDirection: "column", marginTop: "8%", }}>
 
-                        <Button
-                            iconLeft
-                            transparent
-                            success
-                            style={{ flex: 0.7, justifyContent: "center" }}
-                            onPress={() => findLocation()}
-                        >
+                        <Input placeholder='Enter Location' style={{ marginHorizontal: 20, flex: 1, borderBottomWidth: 2, borderColor: "black" }} value={location} onChangeText={(text) => setLocation(text)} />
 
-                            <Icon name='search' size={20} style={{ marginRight: 10 }} />
-                            <Text style={{ fontSize: 24 }}>Search</Text>
-                        </Button>
+
+                        <TouchableOpacity style={{ width: "60%", marginTop: 20, alignSelf: "center" }}>
+                            <Btn
+
+                                color="#009387"
+                                title="Search"
+                                style={{ flex: 0.7, justifyContent: "center", }}
+                                onPress={() => findLocation()}
+                            />
+                        </TouchableOpacity>
+
+
+
+
+
 
                     </View>
 

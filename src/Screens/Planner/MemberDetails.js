@@ -22,9 +22,9 @@ const MemberList = ({ navigation }) => {
 
     const renderItem = ({ item }) => {
 
-        console.log(item)
 
-        return (
+
+        return item.userId ? (
             <ListItem bottomDivider >
                 <Avatar title={item.userId["name"]} source={{ uri: item.userId["picture"] }} />
                 <ListItem.Content>
@@ -34,7 +34,7 @@ const MemberList = ({ navigation }) => {
                 </ListItem.Content>
                 <ListItem.Chevron />
             </ListItem>
-        )
+        ) : null
     }
 
     return (
